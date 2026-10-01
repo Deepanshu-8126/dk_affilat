@@ -1,0 +1,16 @@
+# Core runtime deliberately uses the Python stdlib for all network calls, so the
+# scaffold runs with essentially zero third-party deps. Only PyYAML is required.
+PyYAML>=6.0
+
+# ---------------------------------------------------------------------------
+# OPTIONAL — uncomment to use richer official SDKs instead of the built-in
+# stdlib HTTP layer. The code works without them (graceful fallbacks).
+# ---------------------------------------------------------------------------
+# google-generativeai>=0.8      # nicer Gemini client
+# groq>=0.11                    # official Groq SDK
+# ollama>=0.3                   # official Ollama client
+# firecrawl-py>=1.0             # official Firecrawl SDK
+# requests>=2.31                # if you prefer requests over urllib
+# markdown>=3.6                 # richer Markdown->HTML than the built-in
+# google-api-python-client>=2   # real Google Search Console API
+# google-auth>=2.30

@@ -1,0 +1,56 @@
+# =============================================================================
+# KNOWLEDGE BASE — PER-NICHE PLAYBOOKS (niche-specific expert tactics)
+# =============================================================================
+cards:
+  - id: pb_ai_tools
+    tags: [ai tools, review, comparison, saas]
+    applies_to: [agent_1_ai_tools]
+    title: "AI Tools Reviews playbook"
+    rule: |
+      Money format: hands-on reviews and "X vs Y" comparisons. Always include a
+      pricing table (free tier / paid / enterprise), a use-case verdict ("best for
+      solo creators", "best for teams"), and honest limitations. Best affiliate
+      routes: recurring SaaS via Impact/PartnerStack (compounds monthly). Update
+      "best AI tools for {job}" quarterly. Screenshots + real test results = E-E-A-T.
+
+  - id: pb_ai_coding
+    tags: [ai coding, developer, tutorial, copilot]
+    applies_to: [agent_2_ai_coding]
+    title: "AI Coding Tutorials playbook"
+    rule: |
+      Audience = developers who distrust fluff. Lead with working, copy-paste code,
+      versions/dependencies, and gotchas. Money via dev-tool affiliates (Copilot,
+      Cursor) and courses (ClickBank/Gumroad). Comparison posts ("Cursor vs Copilot
+      for {language}") convert well. Depth and correctness build trust; one wrong
+      snippet loses the audience.
+
+  - id: pb_ai_automation
+    tags: [ai automation, workflow, no-code, roi]
+    applies_to: [agent_3_ai_automation]
+    title: "AI Automation Guides playbook"
+    rule: |
+      Sell time saved and ROI. Format: step-by-step workflows with a clear before/
+      after ("save 5 hours/week"), templates, and a copyable recipe. Best money:
+      recurring automation SaaS (Make, Zapier, n8n) via PartnerStack/Impact —
+      recurring commissions compound. Include a downloadable checklist to capture
+      emails (owned audience).
+
+  - id: pb_ai_visual
+    tags: [ai image, ai video, generation, prompt, creative]
+    applies_to: [agent_4_ai_visual]
+    title: "AI Image & Video playbook"
+    rule: |
+      Highly visual, fast-moving niche — freshness wins. Show real generations,
+      prompt recipes, side-by-side model comparisons ("Veo 3 vs Runway"), and
+      quality/price verdicts. Money: tool subscriptions (affiliate) + physical gear
+      on Amazon (mics, capture cards, tablets) + your own prompt-pack digital product
+      (Gumroad, 100% margin). Launch-day coverage of new models captures big spikes.
+
+  - id: pb_usa_focus
+    tags: [usa, geo, rpm, audience, english]
+    applies_to: [all]
+    title: "Write for the US reader (RPM)"
+    rule: |
+      Default audience is US: US spelling, USD pricing, US-available tools first,
+      US examples. This maximizes RPM and affiliate conversion. Mention regional
+      availability where relevant, but lead with what a US reader can buy today.

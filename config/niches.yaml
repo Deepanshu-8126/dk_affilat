@@ -1,0 +1,303 @@
+# =============================================================================
+# TREND-DRIVEN MULTI-NICHE WEBSITE EARNING SYSTEM
+# Niche / Agent configuration
+# -----------------------------------------------------------------------------
+# Every agent shares the SAME 7-step pipeline but has a different "brain" (LLM),
+# tone, author persona and target site. This is what makes 3 sites read like
+# 3 different human writers.
+# =============================================================================
+
+defaults:
+  language: "en"
+  target_country: "US"          # RPM optimisation target
+
+  # ---------------------------------------------------------------------------
+  # AGENTIC STRATEGY — how the meta-strategist decides each day.
+  # ---------------------------------------------------------------------------
+  strategy:
+    mode: "agentic"             # agentic = strategist picks & orders niches
+    max_publish_per_day: 4      # how many niches may publish per run
+    min_opportunity: 20         # skip niches below this blended opportunity score
+
+  # ---------------------------------------------------------------------------
+  # MARKET STRATEGY ENGINE — turns traffic into money on purpose.
+  # Scores commercial (buyer) intent, matches each topic to the highest-paying
+  # affiliate platform, estimates RPM/commission, and steers content toward
+  # money pages (reviews/comparisons/buyer's guides) that convert clicks + ads.
+  # ---------------------------------------------------------------------------
+  market:
+    target_geo: "US"                 # primary audience for RPM (US/UK/CA highest)
+    secondary_geo: ["UK", "CA", "AU", "IN"]
+    buyer_intent_keywords:
+      high:   ["best", "review", "vs", "top", "buy", "price", "deal", "discount",
+               "coupon", "cheapest", "worth it", "alternative", "for beginners"]
+      medium: ["how to", "guide", "tutorial", "setup", "examples", "tips"]
+    rpm_bands: { transactional: 22, commercial: 14, informational: 6 }
+    min_commercial_score: 45         # below this -> informational (ads-only)
+    max_cta_per_post: 4
+    money_content_types: ["review", "comparison", "buyers_guide", "listicle", "prompt_guide"]
+    # AFFILIATE PLATFORM REGISTRY — 2026/2027 relevant. Matched to niches by tag.
+    # commission = typical %, cookie = attribution window (days).
+    affiliate_platforms:
+      amazon_us:    { name: "Amazon Associates (US)", geo: US,     commission: [1, 10],  cookie: 1,  best_for: ["physical","gadgets","books","accessories"], env: AMAZON_ASSOCIATE_TAG }
+      meesho:       { name: "Meesho Affiliate",       geo: IN,     commission: [4, 12],  cookie: 30, best_for: ["physical","fashion","home","budget"],       env: MEESHO_AFFILIATE_ID }
+      impact:       { name: "Impact.com",             geo: GLOBAL, commission: [10, 50], cookie: 30, best_for: ["saas","software","brands"],                  env: IMPACT_AFFILIATE_ID }
+      shareasale:   { name: "ShareASale / Awin",      geo: GLOBAL, commission: [10, 40], cookie: 30, best_for: ["saas","tools","digital"],                    env: SHAREASALE_AFFILIATE_ID }
+      partnerstack: { name: "PartnerStack",           geo: GLOBAL, commission: [20, 50], cookie: 90, best_for: ["saas","b2b","recurring"],                    env: PARTNERSTACK_AFFILIATE_ID }
+      clickbank:    { name: "ClickBank / Digistore24",geo: GLOBAL, commission: [30, 75], cookie: 60, best_for: ["digital","courses","info-products"],         env: CLICKBANK_AFFILIATE_ID }
+      lemonsqueezy: { name: "Lemon Squeezy / Gumroad",geo: GLOBAL, commission: [20, 50], cookie: 30, best_for: ["digital","indie-saas","templates"],          env: LEMONSQUEEZY_AFFILIATE_ID }
+
+  # ---------------------------------------------------------------------------
+  # VIDEO-FOR-SEO — OpenMontage repurpose logic (calesthio/OpenMontage).
+  # Every post also produces a VideoObject schema + a YouTube pack + a free
+  # OpenMontage render manifest (Piper TTS + FFmpeg + Remotion = ₹0). YouTube is
+  # the 2nd-largest search engine and an embedded clip lifts on-page dwell time.
+  # Set OPENMONTAGE_DIR to a local checkout to make manifests renderable.
+  # ---------------------------------------------------------------------------
+  video_seo:
+    enabled: true
+    length: "long"          # long (explainer, high AdSense RPM) | shorts (viral reach)
+    render: false           # true only if OPENMONTAGE_DIR is set (free stack)
+    embed_on_page: true     # embed the video in the post for dwell-time SEO
+
+  # ---------------------------------------------------------------------------
+  # MULTI-ACCOUNT — rotate syndication across several accounts per platform to
+  # spread risk and scale reach. Each entry maps to an env prefix; the rotator
+  # picks the next healthy account round-robin. Missing envs are skipped.
+  # ---------------------------------------------------------------------------
+  accounts:
+    rotation: "round_robin"     # round_robin | least_recent | random
+    pools:
+      devto:    [DEVTO_API_KEY, DEVTO_API_KEY_2, DEVTO_API_KEY_3]
+      hashnode: [HASHNODE_TOKEN, HASHNODE_TOKEN_2]
+      medium:   [MEDIUM_TOKEN, MEDIUM_TOKEN_2]
+  word_count:
+    min: 1500
+    max: 2500
+  trends_per_run: 3             # topics detected per niche per run
+  research_sources: 5          # top sources scraped per topic
+  qc_min_score: 80             # publish gate (0-100)
+  seo_min_score: 80
+  humanize: true
+  publish_platforms:            # WOPE targets (primary first)
+    - wordpress
+    - devto
+    - medium
+    - hashnode
+  index_now: true
+  # Random publish windows (local hour:minute). One is picked per run.
+  publish_windows:
+    - "08:07"
+    - "14:23"
+    - "20:41"
+
+  # ---------------------------------------------------------------------------
+  # MONETIZATION — affiliate injection, disclosures and AdSense placement.
+  # All ids come from env (see .env.example). Missing ids => that piece is
+  # skipped gracefully (no broken links, no empty ad slots).
+  # ---------------------------------------------------------------------------
+  monetization:
+    max_affiliate_links: 6        # cap links per post (avoid spammy over-linking)
+    link_rel: "sponsored nofollow noopener"
+    open_in_new_tab: true
+    disclosure:
+      # Placed near the top of every post that has affiliate links (FTC requirement)
+      affiliate: >-
+        Disclosure: Some links below are affiliate links. If you buy through
+        them we may earn a small commission at no extra cost to you. We only
+        recommend tools we would use ourselves.
+      amazon: >-
+        As an Amazon Associate we earn from qualifying purchases.
+    adsense:
+      enabled: true
+      publisher_id_env: ADSENSE_PUBLISHER_ID   # ca-pub-XXXXXXXXXXXXXXXX
+      slot_id_env: ADSENSE_SLOT_IN_ARTICLE
+      max_units: 2                # in-article auto-relaxed ad units
+      min_words_for_ads: 900      # don't put ads on thin posts (policy-safe)
+    amazon:
+      associate_tag_env: AMAZON_ASSOCIATE_TAG   # yourtag-20
+    # Registry: tool slug -> affiliate destination. {tag} is filled from tag_env.
+    # If tag_env is unset the plain url is used (still a valid outbound link).
+    affiliate_registry:
+      jasper:
+        name: "Jasper"
+        url: "https://www.jasper.ai/?fpr={tag}"
+        tag_env: JASPER_AFFILIATE_ID
+      copy.ai:
+        name: "Copy.ai"
+        url: "https://www.copy.ai/?via={tag}"
+        tag_env: COPYAI_AFFILIATE_ID
+      writesonic:
+        name: "Writesonic"
+        url: "https://writesonic.com/?ref={tag}"
+        tag_env: WRITESONIC_AFFILIATE_ID
+      notion-ai:
+        name: "Notion AI"
+        url: "https://affiliate.notion.so/{tag}"
+        tag_env: NOTION_AFFILIATE_ID
+      github-copilot:
+        name: "GitHub Copilot"
+        url: "https://github.com/features/copilot"
+        tag_env: null
+      cursor:
+        name: "Cursor"
+        url: "https://cursor.com/"
+        tag_env: null
+      tabnine:
+        name: "Tabnine"
+        url: "https://www.tabnine.com/?ref={tag}"
+        tag_env: TABNINE_AFFILIATE_ID
+      replit:
+        name: "Replit"
+        url: "https://replit.com/refer/{tag}"
+        tag_env: REPLIT_AFFILIATE_ID
+      make:
+        name: "Make"
+        url: "https://www.make.com/en/register?pc={tag}"
+        tag_env: MAKE_AFFILIATE_ID
+      zapier:
+        name: "Zapier"
+        url: "https://zapier.com/sign-up?utm_source={tag}"
+        tag_env: ZAPIER_AFFILIATE_ID
+      n8n:
+        name: "n8n"
+        url: "https://n8n.io/?ref={tag}"
+        tag_env: N8N_AFFILIATE_ID
+      activepieces:
+        name: "Activepieces"
+        url: "https://www.activepieces.com/"
+        tag_env: null
+
+# -----------------------------------------------------------------------------
+# BRAIN REGISTRY — LLM providers each agent can bind to
+# -----------------------------------------------------------------------------
+brains:
+  gemini_flash:
+    provider: gemini
+    model: "gemini-3.5-flash-lite"
+    api_key_env: GEMINI_API_KEY
+    free_tier: "1500 req/day"
+    temperature: 0.75
+    max_output_tokens: 8192
+  groq_llama70b:
+    provider: groq
+    model: "openai/gpt-oss-120b"
+    api_key_env: GROQ_API_KEY
+    free_tier: "30 req/min"
+    temperature: 0.6
+    max_output_tokens: 8000
+  qwen3_local:
+    provider: ollama
+    model: "qwen3:8b"
+    base_url_env: OLLAMA_BASE_URL      # default http://localhost:11434
+    free_tier: "unlimited (local)"
+    temperature: 0.7
+    max_output_tokens: 8000
+
+# -----------------------------------------------------------------------------
+# NICHE AGENTS
+# -----------------------------------------------------------------------------
+niches:
+  - id: agent_1_ai_tools
+    name: "AI Tools Reviews"
+    site:
+      domain: "ai-tools-review.com"
+      wordpress_base_url_env: WP1_URL
+      wordpress_user_env: WP1_USER
+      wordpress_app_password_env: WP1_APP_PASSWORD
+    brain: gemini_flash
+    tone: "Pro Reviewer, data-driven, comparison-led, verdict-first"
+    author:
+      name: "James Carter"
+      title: "AI Analyst"
+      bio: "James Carter is an AI analyst with 5+ years testing and benchmarking AI tools. He focuses on hands-on comparisons, pricing breakdowns and real-world workflows."
+      avatar_prompt: "professional headshot of a 35-year-old male tech analyst, neutral studio background, friendly confident expression, natural lighting, photorealistic"
+    keywords_seed:
+      - "AI tools"
+      - "AI software review"
+      - "best AI tools"
+      - "AI tool comparison"
+    trend_sources: [citedy, fn_ignis, trends_checker, deeptrend]
+    monetization:
+      adsense: true
+      amazon_associates: true
+      saas_affiliate: ["jasper", "copy.ai", "writesonic", "notion-ai"]
+    content_types: ["review", "comparison", "listicle", "buyers_guide"]
+
+  - id: agent_2_ai_coding
+    name: "AI Coding Tutorials"
+    site:
+      domain: "ai-code-tutorial.com"
+      wordpress_base_url_env: WP2_URL
+      wordpress_user_env: WP2_USER
+      wordpress_app_password_env: WP2_APP_PASSWORD
+    brain: groq_llama70b
+    tone: "Senior Dev, practical, code-first, no fluff, opinionated"
+    author:
+      name: "Alex Chen"
+      title: "Full-stack Developer"
+      bio: "Alex Chen is a full-stack developer (ex-Google) who writes practical, copy-paste-ready coding tutorials with a focus on AI-assisted development."
+      avatar_prompt: "professional headshot of a 32-year-old asian male software engineer, casual tech-office background, warm smile, photorealistic"
+    keywords_seed:
+      - "AI coding"
+      - "coding tutorial"
+      - "AI pair programming"
+      - "LLM app development"
+    trend_sources: [citedy, fn_ignis, deeptrend, trends_checker]
+    monetization:
+      adsense: true
+      amazon_associates: false
+      saas_affiliate: ["github-copilot", "cursor", "tabnine", "replit"]
+    content_types: ["tutorial", "how_to", "deep_dive", "troubleshooting"]
+
+  - id: agent_3_ai_automation
+    name: "AI Automation Guides"
+    site:
+      domain: "ai-automate.com"
+      wordpress_base_url_env: WP3_URL
+      wordpress_user_env: WP3_USER
+      wordpress_app_password_env: WP3_APP_PASSWORD
+    brain: qwen3_local
+    tone: "Automation Expert, step-by-step, checklist-driven, ROI-focused"
+    author:
+      name: "Sarah Mitchell"
+      title: "DevOps + AI Specialist"
+      bio: "Sarah Mitchell is a DevOps and AI automation specialist who builds no-code and low-code workflows that save teams hours every week."
+      avatar_prompt: "professional headshot of a 34-year-old female automation engineer, modern office background, confident approachable expression, photorealistic"
+    keywords_seed:
+      - "AI automation"
+      - "workflow automation"
+      - "no-code automation"
+      - "automate with AI"
+    trend_sources: [citedy, fn_ignis, deeptrend, trends_checker]
+    monetization:
+      adsense: true
+      amazon_associates: false
+      saas_affiliate: ["make", "zapier", "n8n", "activepieces"]
+    content_types: ["guide", "workflow", "checklist", "case_study"]
+
+  - id: agent_4_ai_visual
+    name: "AI Image & Video Generation"
+    site:
+      domain: "ai-visual-lab.com"
+      wordpress_base_url_env: WP4_URL
+      wordpress_user_env: WP4_USER
+      wordpress_app_password_env: WP4_APP_PASSWORD
+    brain: groq_llama70b
+    tone: "Creative Technologist, visual-first, hands-on, prompt-driven"
+    author:
+      name: "Maya Rodriguez"
+      title: "Generative Media Artist"
+      bio: "Maya Rodriguez is a generative media artist who tests AI image and video models daily and shares prompt recipes, workflows and honest quality comparisons."
+      avatar_prompt: "professional headshot of a 30-year-old latina female digital artist, colorful creative studio background, warm confident smile, photorealistic"
+    keywords_seed:
+      - "AI image generation"
+      - "AI video generator"
+      - "text to image"
+      - "AI art tools"
+    trend_sources: [citedy, fn_ignis, deeptrend, trends_checker]
+    monetization:
+      adsense: true
+      amazon_associates: true
+      saas_affiliate: ["jasper", "copy.ai"]
+    content_types: ["review", "comparison", "tutorial", "prompt_guide"]

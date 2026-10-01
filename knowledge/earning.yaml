@@ -1,0 +1,94 @@
+# =============================================================================
+# KNOWLEDGE BASE — HOW EARNING ACTUALLY WORKS (affiliate + ads + funnels)
+# =============================================================================
+cards:
+  - id: intent_ladder
+    tags: [intent, buyer, transactional, commercial, money]
+    applies_to: [all, transactional, commercial]
+    title: "Match content to the buyer-intent ladder"
+    rule: |
+      Search intent has rungs, each monetizes differently:
+      - Informational ("what is X") -> ads only, low RPM, top-of-funnel trust.
+      - Commercial ("best X", "X review", "X vs Y") -> affiliate GOLD, high RPM.
+      - Transactional ("X pricing", "X coupon", "buy X") -> highest conversion.
+      Write mostly commercial/transactional for money; use informational posts to
+      build authority and internal-link them UP to your money pages.
+
+  - id: rpm_drivers
+    tags: [rpm, ads, adsense, geo, cpc, earnings]
+    applies_to: [all]
+    title: "What actually drives ad RPM"
+    rule: |
+      RPM = revenue per 1000 views. Levers, biggest first: (1) Audience GEO —
+      US/UK/CA/AU pay 5-10x India traffic; write for the US. (2) Niche CPC —
+      finance, software, B2B SaaS pay far more than entertainment. (3) Content
+      length + dwell time — longer, genuinely useful posts show more ads and rank
+      better. (4) Ad viewability — place units where they're seen, not stuffed.
+      One US SaaS reader can be worth 20 low-CPC readers.
+
+  - id: affiliate_selection
+    tags: [affiliate, commission, cookie, recurring, platform]
+    applies_to: [all, transactional, commercial]
+    title: "Pick affiliate programs by expected value, not just %"
+    rule: |
+      Expected value = commission% × price × conversion × cookie window × approval
+      odds. Recurring SaaS (PartnerStack/Impact, 20-50% MONTHLY) beats one-time
+      because it compounds. Digital (ClickBank 30-75%) pays most per sale. Amazon
+      pays little (1-10%) but converts high due to trust and tags EVERYTHING bought
+      in the session. Rule of thumb: promote recurring SaaS for income stability,
+      Amazon for volume/trust, digital for big one-off payouts.
+
+  - id: conversion_structure
+    tags: [conversion, cta, verdict, table, structure]
+    applies_to: [transactional, commercial, review, comparison]
+    title: "The money-page structure that converts"
+    rule: |
+      Winning review/comparison layout: (1) Verdict box up top — winner + runner-up
+      + one-line why, with the affiliate button. Decisive readers buy here. (2)
+      Comparison table with a CTA per row. (3) Deep-dive per option: who it's for,
+      pros/cons, real price. (4) "Which should you pick" by use case. (5) One
+      strong closing CTA. Put the primary affiliate link within the first screen.
+
+  - id: cta_psychology
+    tags: [cta, trust, disclosure, click, persuasion]
+    applies_to: [all]
+    title: "CTAs that get clicked without killing trust"
+    rule: |
+      Specific beats generic: "Try Jasper free for 7 days" > "Click here". Reduce
+      risk with "free trial / money-back / no card". Give an honest reason ("best
+      for long-form"). Disclose affiliate links (FTC + trust). Do NOT stuff links —
+      3-4 well-placed CTAs convert better than 15 and keep ad viewability high.
+      Recommend what you'd actually use; one betrayed reader never returns.
+
+  - id: funnel_internal_links
+    tags: [funnel, internal-link, cluster, authority, pillar]
+    applies_to: [all]
+    title: "Build a funnel with internal links"
+    rule: |
+      Informational posts capture curious readers; link them to commercial posts
+      ("we compared these in our best-X guide"), which link to the single money
+      page. This passes SEO authority UP to money pages and walks readers DOWN the
+      funnel. Topic clusters (many posts around one theme, interlinked) rank the
+      whole cluster, not just one page.
+
+  - id: diversify_income
+    tags: [income, risk, diversify, stability, 2026, 2027]
+    applies_to: [all]
+    title: "Diversify income streams (2026/2027-proof)"
+    rule: |
+      Never depend on one channel. Stack: display ads (AdSense/Ezoic once eligible),
+      affiliate (recurring + one-time), your own digital product (template/ebook),
+      and email capture (owned audience survives algorithm changes). As AI search
+      reduces some clicks, owned email + brand + affiliate depth matter more than
+      raw pageviews. Optimize for revenue-per-reader, not just traffic.
+
+  - id: compliance_longevity
+    tags: [compliance, policy, adsense, quality, penalty]
+    applies_to: [all]
+    title: "Play long-game: quality + compliance = survival"
+    rule: |
+      Google rewards helpful, experience-backed content and demotes mass-produced
+      thin pages. Add first-hand testing, real screenshots, specific numbers, and an
+      author with expertise (E-E-A-T). Follow AdSense policy (no ads on thin/policy-
+      violating pages), disclose affiliates, and never fabricate prices/specs. 30
+      excellent posts outrank and outlast 300 mediocre ones.

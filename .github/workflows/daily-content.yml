@@ -1,0 +1,129 @@
+name: Daily Content
+
+# Three cron windows (GitHub cron is UTC). The job itself also adds a random
+# in-process jitter + random publish window, so real publish time is never fixed.
+on:
+  schedule:
+    - cron: "37 2 * * *"    # ~08:07 IST
+    - cron: "53 8 * * *"    # ~14:23 IST
+    - cron: "11 15 * * *"   # ~20:41 IST
+  workflow_dispatch:
+    inputs:
+      only:
+        description: "Run a single niche id (blank = all)"
+        required: false
+        default: ""
+      dry_run:
+        description: "Simulate publish"
+        required: false
+        default: "false"
+
+concurrency:
+  group: daily-content
+  cancel-in-progress: false
+
+jobs:
+  content:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      # ---- brains ----
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+      OLLAMA_BASE_URL: ${{ secrets.OLLAMA_BASE_URL }}
+      # ---- research / seo ----
+      FIRECRAWL_API_KEY: ${{ secrets.FIRECRAWL_API_KEY }}
+      OPEN_SEO_URL: ${{ secrets.OPEN_SEO_URL }}
+      DEEPTREND_FEED_URL: ${{ secrets.DEEPTREND_FEED_URL }}
+      # ---- images ----
+      Z_IMAGE_URL: ${{ secrets.Z_IMAGE_URL }}
+      ENABLE_POLLINATIONS: "true"
+      # ---- publish: site 1 ----
+      WP1_URL: ${{ secrets.WP1_URL }}
+      WP1_USER: ${{ secrets.WP1_USER }}
+      WP1_APP_PASSWORD: ${{ secrets.WP1_APP_PASSWORD }}
+      # ---- publish: site 2 ----
+      WP2_URL: ${{ secrets.WP2_URL }}
+      WP2_USER: ${{ secrets.WP2_USER }}
+      WP2_APP_PASSWORD: ${{ secrets.WP2_APP_PASSWORD }}
+      # ---- publish: site 3 ----
+      WP3_URL: ${{ secrets.WP3_URL }}
+      WP3_USER: ${{ secrets.WP3_USER }}
+      WP3_APP_PASSWORD: ${{ secrets.WP3_APP_PASSWORD }}
+      # ---- publish: site 4 ----
+      WP4_URL: ${{ secrets.WP4_URL }}
+      WP4_USER: ${{ secrets.WP4_USER }}
+      WP4_APP_PASSWORD: ${{ secrets.WP4_APP_PASSWORD }}
+      # ---- syndication ----
+      DEVTO_API_KEY: ${{ secrets.DEVTO_API_KEY }}
+      HASHNODE_TOKEN: ${{ secrets.HASHNODE_TOKEN }}
+      HASHNODE_PUBLICATION_ID: ${{ secrets.HASHNODE_PUBLICATION_ID }}
+      MEDIUM_TOKEN: ${{ secrets.MEDIUM_TOKEN }}
+      SYNDICATE_HANDLE: ${{ secrets.SYNDICATE_HANDLE }}
+      # ---- indexing ----
+      INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+      # ---- monetization ----
+      ADSENSE_PUBLISHER_ID: ${{ secrets.ADSENSE_PUBLISHER_ID }}
+      ADSENSE_SLOT_IN_ARTICLE: ${{ secrets.ADSENSE_SLOT_IN_ARTICLE }}
+      AMAZON_ASSOCIATE_TAG: ${{ secrets.AMAZON_ASSOCIATE_TAG }}
+      MEESHO_AFFILIATE_ID: ${{ secrets.MEESHO_AFFILIATE_ID }}
+      IMPACT_AFFILIATE_ID: ${{ secrets.IMPACT_AFFILIATE_ID }}
+      SHAREASALE_AFFILIATE_ID: ${{ secrets.SHAREASALE_AFFILIATE_ID }}
+      PARTNERSTACK_AFFILIATE_ID: ${{ secrets.PARTNERSTACK_AFFILIATE_ID }}
+      CLICKBANK_AFFILIATE_ID: ${{ secrets.CLICKBANK_AFFILIATE_ID }}
+      LEMONSQUEEZY_AFFILIATE_ID: ${{ secrets.LEMONSQUEEZY_AFFILIATE_ID }}
+      PRODUCT_TREND_FEED_URL: ${{ secrets.PRODUCT_TREND_FEED_URL }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      WP_AUTO_URL: ${{ secrets.WP_AUTO_URL }}
+      WP_AUTO_USER: ${{ secrets.WP_AUTO_USER }}
+      WP_AUTO_APP_PASSWORD: ${{ secrets.WP_AUTO_APP_PASSWORD }}
+      JASPER_AFFILIATE_ID: ${{ secrets.JASPER_AFFILIATE_ID }}
+      COPYAI_AFFILIATE_ID: ${{ secrets.COPYAI_AFFILIATE_ID }}
+      WRITESONIC_AFFILIATE_ID: ${{ secrets.WRITESONIC_AFFILIATE_ID }}
+      NOTION_AFFILIATE_ID: ${{ secrets.NOTION_AFFILIATE_ID }}
+      TABNINE_AFFILIATE_ID: ${{ secrets.TABNINE_AFFILIATE_ID }}
+      REPLIT_AFFILIATE_ID: ${{ secrets.REPLIT_AFFILIATE_ID }}
+      MAKE_AFFILIATE_ID: ${{ secrets.MAKE_AFFILIATE_ID }}
+      ZAPIER_AFFILIATE_ID: ${{ secrets.ZAPIER_AFFILIATE_ID }}
+      N8N_AFFILIATE_ID: ${{ secrets.N8N_AFFILIATE_ID }}
+      # ---- approval ----
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      # In CI we auto-approve by default; flip to false + run the listener for HITL.
+      REQUIRE_APPROVAL: "false"
+      AUTO_APPROVE: "true"
+      DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install deps
+        run: pip install -r requirements.txt
+
+      - name: Restore learning memory + seen cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            data/memory
+            data/seen
+          key: content-memory-${{ github.run_id }}
+          restore-keys: content-memory-
+
+      - name: Run agents
+        run: python run.py ${{ github.event.inputs.only && format('--only {0}', github.event.inputs.only) || '' }}
+
+      - name: Update learning loop
+        run: python learn.py
+        continue-on-error: true
+
+      - name: Upload run artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: run-${{ github.run_id }}
+          path: data/runs
+          retention-days: 14

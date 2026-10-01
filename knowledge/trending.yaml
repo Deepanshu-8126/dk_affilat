@@ -1,0 +1,72 @@
+# =============================================================================
+# KNOWLEDGE BASE — HOW TRENDING ACTUALLY WORKS
+# Each "card" is a distilled expert rule the brain retrieves and reasons with.
+# tags -> matched against topic/keywords; applies_to -> 'all' or niche/tier.
+# =============================================================================
+cards:
+  - id: trend_lifecycle
+    tags: [trend, timing, momentum, spike, window]
+    applies_to: [all]
+    title: "Ride the trend lifecycle — enter early, not late"
+    rule: |
+      Every trend has 4 stages: (1) Emergence — a few insiders talk about it,
+      search volume tiny but rising fast; (2) Acceleration — 100-300% week-over-week
+      growth, few articles exist = easiest to rank; (3) Peak — everyone writes about
+      it, competition brutal; (4) Decline — evergreen residual traffic.
+      BEST money window is stage 2 (acceleration): demand is real, competition thin.
+      If a topic is already at peak, only enter with a sharper angle (comparison,
+      "is it worth it", alternatives) — never a generic explainer.
+
+  - id: momentum_signals
+    tags: [momentum, signal, spike, data, validate]
+    applies_to: [all]
+    title: "Validate momentum with 3 independent signals"
+    rule: |
+      Never trust a single source. Confirm a trend with at least 3 of: Google
+      Trends rising query (+50% or more), a spike in Reddit/X mentions, a GitHub
+      repo gaining stars fast, a new product launch (Product Hunt), or YouTube
+      view velocity. Cross-source corroboration = real demand, not noise.
+      One source hyping something = skip it.
+
+  - id: seasonality
+    tags: [seasonal, timing, calendar, q4, event]
+    applies_to: [all]
+    title: "Front-run seasonal + event-driven demand"
+    rule: |
+      Publish 3-6 weeks BEFORE demand peaks so Google has time to index and rank.
+      High-value windows: Black Friday/Cyber Monday (Oct-Nov), New Year "best tools
+      of {year}" (Dec-Jan), back-to-work (Jan/Sep), tax/finance season, major model
+      or product launches. "Best X of {next_year}" published in Q4 captures the
+      whole following year.
+
+  - id: keyword_gap
+    tags: [keyword, gap, difficulty, longtail, rank]
+    applies_to: [all]
+    title: "Attack low-difficulty, high-intent long-tails first"
+    rule: |
+      A new site cannot outrank authority sites on head terms. Win with specific
+      long-tails: "best X for [use case]", "X vs Y for [audience]", "how to [job]
+      with X". Target keyword difficulty under 30 and buyer intent. Ten ranked
+      long-tails beat one un-ranked head term. Build topical authority in clusters,
+      then pillar pages inherit the strength.
+
+  - id: platform_dynamics
+    tags: [platform, viral, distribution, reddit, youtube]
+    applies_to: [all]
+    title: "Match the angle to where the trend lives"
+    rule: |
+      Developer trends live on GitHub/HN/Reddit — write technical depth. Consumer AI
+      trends live on YouTube/TikTok/X — write comparisons and "which is best". If a
+      topic is spiking on YouTube, people want a decision ("A vs B"); if on GitHub,
+      they want implementation. Reading the platform tells you the search intent.
+
+  - id: freshness_advantage
+    tags: [fresh, first, speed, breaking, launch]
+    applies_to: [all]
+    title: "Speed on launches beats depth on old topics"
+    rule: |
+      When a major model/tool launches, the first useful, hands-on article in the
+      first 48-72 hours captures outsized traffic before big sites react. Have a
+      launch-day template ready: what it is, what's new, pricing, who it's for,
+      early verdict, alternatives. Update it as more info lands (Google rewards
+      freshness).

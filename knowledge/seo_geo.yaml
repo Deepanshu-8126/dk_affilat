@@ -1,0 +1,63 @@
+# =============================================================================
+# KNOWLEDGE BASE — RANKING (SEO) + AI ANSWER ENGINES (GEO/AEO)
+# =============================================================================
+cards:
+  - id: eeat
+    tags: [eeat, trust, author, experience, quality]
+    applies_to: [all]
+    title: "Prove Experience + Expertise (E-E-A-T)"
+    rule: |
+      Google's core ranking bias in 2026 is helpful content from real experience.
+      Signal it: first-person testing ("I ran X for two weeks"), specific results,
+      real prices/screenshots, an author with a bio and credentials, and honest
+      pros/cons including downsides. Generic AI text with no experience gets demoted.
+
+  - id: search_intent_match
+    tags: [intent, serp, format, match, rank]
+    applies_to: [all]
+    title: "Match the format the SERP is already rewarding"
+    rule: |
+      Before writing, look at what ranks for the keyword. If the top results are
+      listicles, write a better listicle; if comparisons, compare. Google has
+      already decided the intent — matching format is half the battle. Then beat
+      them on depth, freshness, and a clearer verdict.
+
+  - id: onpage_fundamentals
+    tags: [onpage, title, meta, headings, schema]
+    applies_to: [all]
+    title: "On-page fundamentals that still move rankings"
+    rule: |
+      Keyword in title (front-loaded), a compelling meta description (120-160 chars),
+      logical H2/H3 hierarchy, keyword in the first 100 words and one H2, descriptive
+      image alt text, internal links with keyword-rich anchors, and Article + FAQ
+      schema. Keep density natural (0.5-2.5%). Fast, mobile-friendly pages.
+
+  - id: aeo_extractable
+    tags: [aeo, geo, ai-search, answer, snippet, quotable]
+    applies_to: [all]
+    title: "Write to be QUOTED by AI answer engines"
+    rule: |
+      ChatGPT, Perplexity, Gemini and Google AI Overviews cite content that is
+      extractable: a direct one-sentence answer right after the question, TL;DR key
+      takeaways, FAQ blocks, comparison tables, and clear definitions. Lead sections
+      with the answer, then explain. Structured, self-contained facts get pulled
+      into AI answers — becoming the source is the new #1 ranking.
+
+  - id: llms_txt
+    tags: [llms, crawler, ai, standard, index]
+    applies_to: [all]
+    title: "Publish llms.txt for AI crawlers"
+    rule: |
+      Maintain an llms.txt at the domain root listing your highest-signal pages with
+      one-line summaries. It's the emerging standard for telling AI crawlers what
+      matters, improving the odds your content is used and cited by LLM-based search.
+
+  - id: refresh_decay
+    tags: [refresh, update, decay, freshness, maintain]
+    applies_to: [all]
+    title: "Refresh to fight ranking decay"
+    rule: |
+      Rankings decay as content ages and competitors update. Re-publish winners with
+      new data, current-year in the title, added FAQs and fresh screenshots every
+      3-6 months. Updating a page that already ranks is higher ROI than a brand-new
+      post — protect and compound your winners.

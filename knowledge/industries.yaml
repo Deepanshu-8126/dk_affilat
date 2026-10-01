@@ -1,0 +1,353 @@
+# =============================================================================
+# INDUSTRY REGISTRY — the map the auto-detector uses to spin up a niche in ANY
+# industry (gaming/GTA6, finance, crypto, health, ...). Each industry carries the
+# signals to detect trends + the monetization profile to earn from it.
+#
+# fields:
+#   seed_keywords : trend queries to scan for this industry
+#   product_type  : digital | saas | physical | mixed (drives affiliate match)
+#   rpm           : est. US ad RPM (USD/1000 views)
+#   amazon        : true if physical products are relevant (Amazon Associates)
+#   saas          : SaaS/affiliate slugs to link (from market affiliate_registry)
+#   author        : {name, title} persona archetype for this industry
+#   brain         : preferred brain id (falls back / rotates if busy)
+# =============================================================================
+industries:
+  ai_software:
+    name: "AI Software & Tools"
+    tags: [ai, saas, software, tools, digital]
+    seed_keywords: ["best ai tools", "ai software review", "ai app 2026"]
+    product_type: saas
+    rpm: 16
+    amazon: false
+    saas: ["jasper", "copy.ai", "notion-ai"]
+    author: { name: "Jordan Blake", title: "AI Software Analyst" }
+    brain: gemini_flash
+
+  gaming:
+    name: "Gaming & Esports"
+    tags: [gaming, games, console, pc, esports, gta]
+    seed_keywords: ["GTA 6", "GTA VI release date", "best gaming pc 2026",
+                    "best games 2026", "PS5 vs PC", "gaming setup"]
+    product_type: mixed
+    rpm: 11
+    amazon: true
+    saas: []
+    author: { name: "Ryan Cooper", title: "Games Journalist & Hardware Reviewer" }
+    brain: groq_llama70b
+
+  finance:
+    name: "Personal Finance & Investing"
+    tags: [finance, money, investing, credit, banking, fintech]
+    seed_keywords: ["best high yield savings 2026", "how to invest", "best credit card",
+                    "budgeting apps", "index funds"]
+    product_type: digital
+    rpm: 34
+    amazon: false
+    saas: []
+    author: { name: "Diana Foster", title: "Personal Finance Writer (CFP)" }
+    brain: gemini_flash
+
+  crypto:
+    name: "Crypto & Web3"
+    tags: [crypto, bitcoin, web3, blockchain, defi, nft]
+    seed_keywords: ["best crypto exchange 2026", "bitcoin price prediction",
+                    "how to buy crypto", "best crypto wallet", "defi yield"]
+    product_type: digital
+    rpm: 28
+    amazon: false
+    saas: []
+    author: { name: "Marcus Lee", title: "Crypto Markets Analyst" }
+    brain: groq_llama70b
+
+  health_fitness:
+    name: "Health, Fitness & Wellness"
+    tags: [health, fitness, wellness, nutrition, supplements, workout]
+    seed_keywords: ["best protein powder 2026", "home workout plan",
+                    "best fitness tracker", "weight loss tips", "meal prep"]
+    product_type: mixed
+    rpm: 13
+    amazon: true
+    saas: []
+    author: { name: "Emily Sanders", title: "Certified Nutrition & Fitness Coach" }
+    brain: qwen3_local
+
+  tech_gadgets:
+    name: "Consumer Tech & Gadgets"
+    tags: [tech, gadgets, hardware, devices, reviews]
+    seed_keywords: ["best laptop 2026", "best smartphone", "best headphones",
+                    "smart home devices", "best monitor"]
+    product_type: physical
+    rpm: 14
+    amazon: true
+    saas: []
+    author: { name: "Kevin Park", title: "Consumer Tech Reviewer" }
+    brain: groq_llama70b
+
+  ecommerce_marketing:
+    name: "Ecommerce & Digital Marketing"
+    tags: [ecommerce, marketing, shopify, dropshipping, ads, seo]
+    seed_keywords: ["best ecommerce platform 2026", "dropshipping guide",
+                    "email marketing tools", "shopify apps", "facebook ads"]
+    product_type: saas
+    rpm: 22
+    amazon: false
+    saas: ["jasper", "copy.ai"]
+    author: { name: "Sofia Ramirez", title: "Ecommerce Growth Strategist" }
+    brain: gemini_flash
+
+  home_living:
+    name: "Home, Kitchen & Living"
+    tags: [home, kitchen, furniture, appliances, decor]
+    seed_keywords: ["best air fryer 2026", "best robot vacuum",
+                    "kitchen gadgets", "best mattress", "home office setup"]
+    product_type: physical
+    rpm: 10
+    amazon: true
+    saas: []
+    author: { name: "Laura Bennett", title: "Home & Kitchen Product Tester" }
+    brain: qwen3_local
+
+  online_education:
+    name: "Online Learning & Careers"
+    tags: [education, courses, learning, careers, skills]
+    seed_keywords: ["best online courses 2026", "learn to code", "best certifications",
+                    "remote jobs", "side hustle ideas"]
+    product_type: digital
+    rpm: 12
+    amazon: false
+    saas: []
+    author: { name: "Daniel Wright", title: "Career & Upskilling Writer" }
+    brain: gemini_flash
+
+  automotive_ev:
+    name: "Automotive & EVs"
+    tags: [automotive, cars, ev, electric, tesla]
+    seed_keywords: ["best EV 2026", "electric car range", "car accessories",
+                    "EV charging", "best dash cam"]
+    product_type: mixed
+    rpm: 15
+    amazon: true
+    saas: []
+    author: { name: "Chris Morgan", title: "Auto & EV Reviewer" }
+    brain: groq_llama70b
+
+  travel:
+    name: "Travel & Experiences"
+    tags: [travel, flights, hotels, destinations, gear]
+    seed_keywords: ["best travel destinations 2026", "cheap flights",
+                    "best travel gear", "digital nomad", "travel credit cards"]
+    product_type: mixed
+    rpm: 9
+    amazon: true
+    saas: []
+    author: { name: "Nina Patel", title: "Travel Writer & Nomad" }
+    brain: qwen3_local
+
+  # ---- HIGH-RPM MONEY CATEGORIES (finance-adjacent, best CPC) ----
+  insurance:
+    name: "Insurance"
+    tags: [insurance, health-insurance, auto-insurance, life, quotes]
+    seed_keywords: ["best car insurance 2026", "cheap health insurance",
+                    "life insurance quotes", "home insurance", "pet insurance"]
+    product_type: digital
+    rpm: 45
+    amazon: false
+    saas: []
+    author: { name: "Robert Hayes", title: "Insurance Advisor" }
+    brain: gemini_flash
+
+  legal:
+    name: "Legal & Attorney"
+    tags: [legal, lawyer, attorney, claims, rights]
+    seed_keywords: ["personal injury lawyer", "how to file a claim",
+                    "best LLC service 2026", "estate planning", "small business legal"]
+    product_type: digital
+    rpm: 40
+    amazon: false
+    saas: []
+    author: { name: "Patricia Gomez", title: "Legal Writer (JD)" }
+    brain: gemini_flash
+
+  web_hosting:
+    name: "Web Hosting & Domains"
+    tags: [hosting, domain, vps, wordpress, website]
+    seed_keywords: ["best web hosting 2026", "cheap vps", "wordpress hosting",
+                    "best domain registrar", "how to start a website"]
+    product_type: saas
+    rpm: 30
+    amazon: false
+    saas: []
+    author: { name: "Sam Turner", title: "Web Infrastructure Reviewer" }
+    brain: groq_llama70b
+
+  vpn_privacy:
+    name: "VPN, Privacy & Security"
+    tags: [vpn, privacy, security, cybersecurity, antivirus]
+    seed_keywords: ["best VPN 2026", "best antivirus", "how to stay private online",
+                    "password manager", "best proxy"]
+    product_type: saas
+    rpm: 26
+    amazon: false
+    saas: []
+    author: { name: "Alan Reyes", title: "Cybersecurity Analyst" }
+    brain: groq_llama70b
+
+  solar_energy:
+    name: "Solar & Green Energy"
+    tags: [solar, energy, green, battery, sustainability]
+    seed_keywords: ["best solar panels 2026", "home battery storage",
+                    "solar cost calculator", "portable power station", "EV home charger"]
+    product_type: mixed
+    rpm: 35
+    amazon: true
+    saas: []
+    author: { name: "Grace Kim", title: "Clean Energy Writer" }
+    brain: qwen3_local
+
+  b2b_saas:
+    name: "B2B SaaS & Productivity"
+    tags: [b2b, saas, crm, productivity, business]
+    seed_keywords: ["best CRM 2026", "best project management software",
+                    "best HR software", "team productivity tools", "accounting software"]
+    product_type: saas
+    rpm: 24
+    amazon: false
+    saas: ["make", "zapier"]
+    author: { name: "Victor Chen", title: "B2B Software Analyst" }
+    brain: gemini_flash
+
+  # ---- MEDICAL / HEALTH SUB-NICHES ----
+  medical_devices:
+    name: "Medical Devices & Home Health"
+    tags: [medical, health-devices, monitoring, home-health]
+    seed_keywords: ["best blood pressure monitor 2026", "best glucose monitor",
+                    "pulse oximeter", "best thermometer", "hearing aids"]
+    product_type: physical
+    rpm: 20
+    amazon: true
+    saas: []
+    author: { name: "Dr. Anita Rao", title: "Health Tech Reviewer (MD)" }
+    brain: gemini_flash
+
+  mental_wellness:
+    name: "Mental Health & Wellness"
+    tags: [mental-health, therapy, meditation, sleep, stress]
+    seed_keywords: ["best therapy apps 2026", "how to reduce stress",
+                    "best meditation app", "sleep tips", "anxiety help"]
+    product_type: digital
+    rpm: 15
+    amazon: false
+    saas: []
+    author: { name: "Hannah Brooks", title: "Wellness Writer" }
+    brain: qwen3_local
+
+  # ---- COMPUTER / TECH SUB-NICHES ----
+  pc_building:
+    name: "PC Building & Components"
+    tags: [pc, gpu, cpu, build, hardware, computer]
+    seed_keywords: ["best GPU 2026", "best CPU for gaming", "budget PC build",
+                    "best SSD", "best gaming monitor"]
+    product_type: physical
+    rpm: 13
+    amazon: true
+    saas: []
+    author: { name: "Derek Voss", title: "PC Hardware Reviewer" }
+    brain: groq_llama70b
+
+  cybersecurity_pro:
+    name: "Cybersecurity (Pro/Enterprise)"
+    tags: [cybersecurity, infosec, enterprise, cloud-security]
+    seed_keywords: ["best EDR software 2026", "zero trust", "cloud security tools",
+                    "penetration testing tools", "SIEM comparison"]
+    product_type: saas
+    rpm: 28
+    amazon: false
+    saas: []
+    author: { name: "Omar Sadiq", title: "Security Engineer" }
+    brain: gemini_flash
+
+  # ---- VIRAL / EVERYDAY CATEGORIES ----
+  pets:
+    name: "Pets & Animals"
+    tags: [pets, dog, cat, pet-care, supplies]
+    seed_keywords: ["best dog food 2026", "best cat litter", "pet insurance",
+                    "best dog toys", "aquarium setup"]
+    product_type: physical
+    rpm: 10
+    amazon: true
+    saas: []
+    author: { name: "Megan Ellis", title: "Pet Care Specialist" }
+    brain: qwen3_local
+
+  parenting_baby:
+    name: "Parenting & Baby"
+    tags: [parenting, baby, kids, family, gear]
+    seed_keywords: ["best baby monitor 2026", "best stroller", "baby feeding",
+                    "toddler learning toys", "best car seat"]
+    product_type: physical
+    rpm: 12
+    amazon: true
+    saas: []
+    author: { name: "Rachel Adams", title: "Parenting Writer" }
+    brain: qwen3_local
+
+  beauty_skincare:
+    name: "Beauty & Skincare"
+    tags: [beauty, skincare, makeup, haircare, cosmetics]
+    seed_keywords: ["best skincare routine 2026", "best retinol",
+                    "best hair dryer", "korean skincare", "anti aging cream"]
+    product_type: physical
+    rpm: 11
+    amazon: true
+    saas: []
+    author: { name: "Chloe Martin", title: "Beauty Editor" }
+    brain: groq_llama70b
+
+  food_recipes:
+    name: "Food, Recipes & Kitchen"
+    tags: [food, recipes, cooking, kitchen, diet]
+    seed_keywords: ["easy dinner recipes", "best air fryer recipes",
+                    "meal prep ideas", "high protein recipes", "best coffee maker"]
+    product_type: mixed
+    rpm: 9
+    amazon: true
+    saas: []
+    author: { name: "Tony Marino", title: "Recipe Developer" }
+    brain: qwen3_local
+
+  photography:
+    name: "Photography & Video Gear"
+    tags: [photography, camera, video, gear, creator]
+    seed_keywords: ["best camera 2026", "best mirrorless camera",
+                    "best microphone for youtube", "best gimbal", "best lens"]
+    product_type: physical
+    rpm: 12
+    amazon: true
+    saas: []
+    author: { name: "Isabella Ford", title: "Photography Gear Reviewer" }
+    brain: groq_llama70b
+
+  home_improvement:
+    name: "Home Improvement & DIY"
+    tags: [diy, tools, home-improvement, garden, renovation]
+    seed_keywords: ["best cordless drill 2026", "best lawn mower",
+                    "smart thermostat", "diy home projects", "best pressure washer"]
+    product_type: physical
+    rpm: 11
+    amazon: true
+    saas: []
+    author: { name: "Bill Hunter", title: "DIY & Tools Reviewer" }
+    brain: qwen3_local
+
+  side_hustle_income:
+    name: "Side Hustles & Make Money Online"
+    tags: [side-hustle, income, passive, freelance, online-business]
+    seed_keywords: ["best side hustles 2026", "how to make money online",
+                    "passive income ideas", "freelance for beginners", "print on demand"]
+    product_type: digital
+    rpm: 20
+    amazon: false
+    saas: ["make", "copy.ai"]
+    author: { name: "Jordan Wells", title: "Online Income Strategist" }
+    brain: gemini_flash

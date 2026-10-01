@@ -1,0 +1,66 @@
+# =============================================================================
+# KNOWLEDGE BASE — FUTURE-PROOFING 2026 → 2030
+# Where content + earning are heading, so the brain writes for tomorrow's search.
+# =============================================================================
+cards:
+  - id: ai_search_shift
+    tags: [future, ai-search, aeo, zero-click, 2027, 2030]
+    applies_to: [all]
+    title: "Search is moving from links to AI answers (plan for zero-click)"
+    rule: |
+      By 2027-2030 a large share of queries end inside ChatGPT, Perplexity, Gemini
+      and Google AI Overviews without a click. Win by becoming the SOURCE the AI
+      quotes: structured facts, tables, direct answers, FAQs, llms.txt, and strong
+      brand/entity signals. Capture email + community so you own the audience even
+      when clicks fall. Optimize for citations and revenue-per-reader, not raw pageviews.
+
+  - id: agentic_commerce
+    tags: [future, agentic, shopping, agents, commerce, 2027]
+    applies_to: [all, transactional, commercial]
+    title: "AI shopping agents will buy on users' behalf"
+    rule: |
+      As AI agents research and purchase for people, machine-readable comparisons
+      win: clear specs, structured pros/cons, pricing tables and schema an agent can
+      parse. Content that an AI agent can confidently cite as 'the best pick for X'
+      captures agent-driven affiliate conversions. Write for both humans and the
+      agents shopping for them.
+
+  - id: video_first_2030
+    tags: [future, video, shorts, youtube, multimodal]
+    applies_to: [all]
+    title: "Multimodal + short-form video is the distribution layer"
+    rule: |
+      Text posts should ship with a short-form video (AI-generated is fine) and be
+      embeddable. YouTube Shorts / TikTok / Reels drive discovery that feeds search.
+      Repurpose every money article into a 30-60s video with captions; it compounds
+      reach and builds the brand entity that AI search rewards.
+
+  - id: eeat_moat_2030
+    tags: [future, eeat, brand, moat, trust, differentiation]
+    applies_to: [all]
+    title: "First-hand experience + brand is the durable moat"
+    rule: |
+      As AI makes generic text infinite and free, the scarce assets are real testing,
+      proprietary data, a recognizable author/brand, and community trust. Invest in
+      original benchmarks, screenshots, and a consistent expert persona. This is what
+      keeps you cited and ranked when everyone else floods the zone with AI content.
+
+  - id: durable_monetization_2030
+    tags: [future, monetization, recurring, owned, diversify, 2030]
+    applies_to: [all]
+    title: "Shift toward owned + recurring revenue"
+    rule: |
+      Display-ad clicks may soften as AI answers rise, so weight income toward
+      recurring affiliate (SaaS), your own digital products, memberships and email
+      sponsorships. An owned email list and a niche brand are 2030-proof; pure
+      ad-arbitrage on borrowed traffic is fragile. Build assets you control.
+
+  - id: velocity_and_freshness_2030
+    tags: [future, speed, launch, freshness, velocity]
+    applies_to: [all]
+    title: "Publishing velocity on launches beats slow authority"
+    rule: |
+      Product/model launch cycles keep accelerating. A same-day, genuinely useful
+      take on a new launch (a game like GTA 6, a new AI model, a new gadget) captures
+      the demand spike first. Keep launch-ready templates per industry so the agent
+      can ship within hours, then update as facts land.

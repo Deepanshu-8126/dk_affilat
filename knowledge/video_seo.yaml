@@ -1,0 +1,68 @@
+# =============================================================================
+# KNOWLEDGE BASE — VIDEO-FOR-SEO (logic borrowed from calesthio/OpenMontage)
+# Teaches the AI to treat every article as a second, video-based search channel.
+# YouTube = 2nd-largest search engine; embedded video lifts dwell time (a
+# ranking signal). All of it runs on the free stack (Piper TTS + FFmpeg +
+# Remotion) so cost stays at ₹0.
+# =============================================================================
+cards:
+  - id: vid_youtube_is_search
+    tags: [video, youtube, seo, channel, traffic, repurpose]
+    applies_to: [all]
+    title: "YouTube is a search engine — repurpose every money post into video"
+    rule: |
+      Treat each ranked article as a second search surface. Repurpose it into a
+      short explainer video: same primary keyword in the title, first line and
+      first 15 seconds. Publish to YouTube (long-form for AdSense RPM) AND a
+      vertical Shorts/Reels cut (for reach). Link the blog post in the
+      description and pin it in a comment. One research pass -> text + video, so
+      the marginal cost is near zero. Prioritise transactional/commercial posts
+      (best/review/vs) because buyer-intent video monetizes best.
+
+  - id: vid_embed_dwell_time
+    tags: [video, embed, dwell, engagement, ranking, seo]
+    applies_to: [all]
+    title: "Embed the video on the blog post to boost dwell time"
+    rule: |
+      Embed the YouTube video high on the matching blog post (below the intro).
+      Visitors watch, so time-on-page and scroll depth rise — engagement signals
+      Google uses. It also gives the page a shot at a video thumbnail in SERPs.
+      Always pair the embed with a VideoObject JSON-LD block (name, description,
+      thumbnailUrl, uploadDate, duration, contentUrl/embedUrl) so the page is
+      eligible for video rich results and Google Video search.
+
+  - id: vid_research_first
+    tags: [video, research, process, openmontage, quality]
+    applies_to: [all]
+    title: "Research first, many angles (OpenMontage pattern)"
+    rule: |
+      Before producing anything — text or video — fan the topic out across many
+      angles: definition, best/comparison, how-to, pricing/worth-it, latest
+      updates, complaints, alternatives and common questions. Pull facts from a
+      wide, current source base instead of a single search. Broader research
+      produces more authoritative content, more accurate FAQs, and a script that
+      already maps to search intent — which is what actually ranks.
+
+  - id: vid_script_structure
+    tags: [video, script, retention, hook, structure]
+    applies_to: [all]
+    title: "Video script: hook in 3s, chapters from the H2 outline"
+    rule: |
+      Open with a 3-second pattern-break hook (a bold claim, a number, or the
+      exact problem). Then deliver the article's H2 sections as chapters with
+      on-screen timestamps — this improves retention and gives YouTube key-moment
+      chapters. End with a single clear CTA back to the full written guide. Keep
+      long-form at 5-8 minutes (RPM sweet spot); keep Shorts under 45s with the
+      keyword said aloud in the first 2 seconds.
+
+  - id: vid_free_stack
+    tags: [video, free, cost, tts, render, tools]
+    applies_to: [all]
+    title: "Render on the free stack — ₹0 video production"
+    rule: |
+      Use the free OpenMontage path: Piper TTS for offline narration, FFmpeg for
+      cuts/encoding, Remotion for programmatic composition, and free stock /
+      generated images for visuals. No paid API key is required. Cap any optional
+      paid provider at $0. This keeps the whole video channel at zero marginal
+      cost, matching the system's ₹0 constraint while still opening real video
+      traffic and AdSense revenue.

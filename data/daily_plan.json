@@ -1,0 +1,45 @@
+{
+  "summary": "Lead with agent_4_ai_visual (opportunity 59.2) \u2014 'Ai Image Generation vs Alternatives: Honest Comparison'. Order by opportunity: agent_4_ai_visual(59.2), agent_1_ai_tools(39.7), agent_2_ai_coding(38.2), agent_3_ai_automation(37.7).",
+  "plans": [
+    {
+      "niche_id": "agent_4_ai_visual",
+      "publish": true,
+      "priority": 1,
+      "opportunity": 59.2,
+      "content_type": "review",
+      "focus_theme": "AI image generation",
+      "top_topic": "Ai Image Generation vs Alternatives: Honest Comparison",
+      "rationale": "trend heat + learning conf 0.17"
+    },
+    {
+      "niche_id": "agent_1_ai_tools",
+      "publish": true,
+      "priority": 2,
+      "opportunity": 39.7,
+      "content_type": "review",
+      "focus_theme": "AI tools",
+      "top_topic": "Top Ai Tools Trends Right Now",
+      "rationale": "trend heat + learning conf 0.17"
+    },
+    {
+      "niche_id": "agent_2_ai_coding",
+      "publish": true,
+      "priority": 3,
+      "opportunity": 38.2,
+      "content_type": "tutorial",
+      "focus_theme": "coding tutorial",
+      "top_topic": "Best Coding Tutorial You Should Try This Month",
+      "rationale": "trend heat + learning conf 0.17"
+    },
+    {
+      "niche_id": "agent_3_ai_automation",
+      "publish": true,
+      "priority": 4,
+      "opportunity": 37.7,
+      "content_type": "guide",
+      "focus_theme": "automate with AI",
+      "top_topic": "How to Get Started with Automate With Ai (Step by Step)",
+      "rationale": "trend heat + learning conf 0.17"
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+# ---------------------------------------------------------------------------
+# SECRETS — never commit these. Keys live in GitHub Actions Secrets instead.
+# ---------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+credentials.json
+token.json
+
+# ---------------------------------------------------------------------------
+# Python
+# ---------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ---------------------------------------------------------------------------
+# Runtime output — regenerated every run, no need to version.
+# (Keep data/memory + data/seen out of git; CI caches them separately.)
+# ---------------------------------------------------------------------------
+data/runs/
+data/memory/
+data/seen/
+data/video_briefs/
+data/*.html
+data/llms/
+*.log
+
+# ---------------------------------------------------------------------------
+# Editor / OS
+# ---------------------------------------------------------------------------
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

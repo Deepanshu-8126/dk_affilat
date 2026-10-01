@@ -1,0 +1,121 @@
+# =============================================================================
+# KNOWLEDGE BASE — HOW TO ACTUALLY DO THE WORK (operating procedures)
+# This teaches the AI the *process*: how to analyze a niche, validate demand,
+# study competitors, plan content, and how ranking + earning really happen.
+# =============================================================================
+cards:
+  - id: sop_niche_analysis
+    tags: [analyze, niche, process, research, evaluate]
+    applies_to: [all]
+    title: "How to analyze a niche (5-point scan)"
+    rule: |
+      Before committing to a topic, score it on 5 axes: (1) DEMAND — is search
+      volume real and rising (Google Trends, GitHub stars, Reddit/X chatter)? (2)
+      COMPETITION — can a new site realistically rank (low-difficulty long-tails
+      exist)? (3) MONETIZATION — are there buyers + affiliate programs + decent
+      CPC? (4) FRESHNESS — is there a spike/launch giving a first-mover window? (5)
+      FIT — does it match the site's topical authority? Only proceed if it scores
+      well on demand + monetization at minimum. Skip vanity topics with no money.
+
+  - id: sop_demand_validation
+    tags: [demand, validate, signals, evidence, data]
+    applies_to: [all]
+    title: "How to validate demand with evidence"
+    rule: |
+      Never guess. Confirm demand: rising Google Trends line, autocomplete +
+      'people also ask' suggestions, active Reddit/forum threads, GitHub repos
+      gaining stars, YouTube videos with high recent views, and existing ranking
+      articles (means Google sees intent). 3+ corroborating signals = build it.
+      Zero signals = it's your opinion, not a market.
+
+  - id: sop_competitor_gap
+    tags: [competitor, gap, analyze, serp, opportunity]
+    applies_to: [all]
+    title: "How to do competitor + content-gap analysis"
+    rule: |
+      Read the top 5 ranking pages for the keyword. Note their format, word count,
+      what subtopics they cover, and — crucially — what they MISS: outdated info,
+      no comparison table, no real testing, no FAQ, weak verdict. Your angle = fill
+      those gaps + be fresher + clearer. Don't copy the leader; beat them on the one
+      dimension readers actually care about (a clear decision).
+
+  - id: sop_keyword_clustering
+    tags: [keyword, cluster, topical-authority, pillar, structure]
+    applies_to: [all]
+    title: "How to build topic clusters for authority"
+    rule: |
+      Group keywords into clusters around one theme. Create a pillar page (broad,
+      e.g. 'best X') and supporting posts (specific long-tails, 'best X for Y',
+      'X vs Z', 'how to use X'). Interlink supporting posts up to the pillar and the
+      pillar down to them. Google ranks the CLUSTER, not a lone page. Build depth in
+      one theme before spreading wide.
+
+  - id: sop_how_ranking_works
+    tags: [ranking, google, index, algorithm, process, how]
+    applies_to: [all]
+    title: "How ranking really works (the honest pipeline)"
+    rule: |
+      Steps: (1) Crawl — Google must find the URL (sitemap, internal links,
+      IndexNow). (2) Index — page must be unique + useful enough to store. (3)
+      Relevance — match query intent and format. (4) Quality/E-E-A-T — experience,
+      author, trust signals. (5) Authority — internal links + some backlinks. (6)
+      Engagement — users must stay and be satisfied (dwell, low pogo-stick). New
+      sites earn trust slowly: expect 3-6 months. Long-tails rank first, head terms
+      later. Refresh winners to hold position.
+
+  - id: sop_intent_to_money
+    tags: [intent, monetize, mapping, funnel, money]
+    applies_to: [all]
+    title: "How to map intent to the right money model"
+    rule: |
+      Informational ('what/why') -> display ads + capture email, link up to money
+      pages. Commercial ('best/review/vs') -> affiliate is primary, ads secondary.
+      Transactional ('price/coupon/buy') -> strongest affiliate CTAs + comparison
+      tables. Match the monetization to the intent; putting hard affiliate CTAs on
+      pure informational posts converts poorly and can annoy readers.
+
+  - id: sop_data_sources
+    tags: [data, sources, tools, github, trends, reddit]
+    applies_to: [all]
+    title: "Which data sources to trust (and for what)"
+    rule: |
+      Google Trends = direction + seasonality. GitHub trending = early dev/AI
+      signals + concrete tools to review. Reddit/forums = real questions + pain
+      points (great for FAQ + angle). YouTube = what people want explained/compared.
+      Amazon best-sellers/movers = what's actually selling. Search Console (once
+      live) = your own winning queries. Cross-reference; one source is a hunch, three
+      is a trend.
+
+  - id: sop_workflow
+    tags: [workflow, process, steps, execute, procedure]
+    applies_to: [all]
+    title: "The end-to-end operating procedure"
+    rule: |
+      Per topic, execute in order: detect trend -> validate demand (3 signals) ->
+      analyze SERP + gaps -> pick angle + content type by intent -> outline in a
+      cluster -> write with real experience + data -> add comparison/verdict/FAQ ->
+      insert affiliate + disclosure + ads per intent -> QC gate (>=80) -> publish
+      canonical + syndicate + IndexNow -> measure in GSC -> refresh winners, cut
+      losers. Repeat. Consistency + measurement beats bursts of effort.
+
+  - id: sop_decision_framework
+    tags: [decision, go-no-go, prioritize, filter]
+    applies_to: [all]
+    title: "Go / no-go decision framework"
+    rule: |
+      GO if: rising demand + low-difficulty entry + clear monetization + you can add
+      real value. WAIT if: demand unproven or SERP dominated by giants with no gap.
+      NO-GO if: no buyers, no affiliate programs, purely seasonal with the window
+      passed, or you can't add anything original. Protect time — a mediocre topic
+      published is worse than nothing (it dilutes topical authority).
+
+  - id: sop_scale_safely
+    tags: [scale, quality, risk, longevity, pace]
+    applies_to: [all]
+    title: "How to scale without getting penalized"
+    rule: |
+      Ramp volume only as quality holds. Keep the QC gate strict, vary authors/voice,
+      publish at human-like cadence, and never mass-publish thin near-duplicates.
+      Prioritize refreshing and deepening winners over endless new thin posts. One
+      genuinely helpful, well-tested article compounds; a hundred thin ones invite
+      an algorithmic penalty. Quality is the moat and the risk control.
