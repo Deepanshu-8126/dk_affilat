@@ -29,6 +29,7 @@ from core.logging_utils import get_logger
 log = get_logger("universal_affiliate_router")
 
 EARNKARO_USER_ID = os.getenv("EARNKARO_USER_ID", "3360368")
+MEESHO_AFFILIATE_ID = os.getenv("MEESHO_AFFILIATE_ID", "374453404")  # Direct Meesho Affiliate Creator User ID
 MEESHO_DIRECT_CODE = os.getenv("MEESHO_DIRECT_CODE", "")
 MYNTRA_AFFILIATE_TAG = os.getenv("MYNTRA_AFFILIATE_TAG", "")
 FLIPKART_AFFILIATE_ID = os.getenv("FLIPKART_AFFILIATE_ID", "")
@@ -45,7 +46,9 @@ class UniversalAffiliateRouter:
         """Returns True if link is already an active affiliate shortlink or tracking URL."""
         lowered = url.lower().strip()
         affiliate_domains = [
+            "af_invite/",
             "meesho.com/s/",
+            "meesho.onelink.me",
             "ekaro.in",
             "earnkaro.com",
             "wishlink.com",
@@ -66,7 +69,7 @@ class UniversalAffiliateRouter:
         Converts any raw product URL into the optimal affiliate tracking link.
         Returns a dict containing:
         - affiliate_url: The final ready-to-click affiliate URL.
-        - platform_used: 'Direct Meesho', 'Direct Myntra', 'Direct Flipkart', 'EarnKaro', or 'Pre-formatted'.
+        - platform_used: 'Direct Meesho Affiliate (374453404)', 'EarnKaro', etc.
         """
         clean_url = raw_url.strip()
         if not clean_url.startswith("http"):
@@ -96,16 +99,28 @@ class UniversalAffiliateRouter:
             elif "nykaa" in clean_url:
                 store_lower = "nykaa"
 
-        # Strategy 2: Direct Meesho Affiliate Program
-        if store_lower == "meesho" and MEESHO_DIRECT_CODE:
-            sep = "&" if "?" in clean_url else "?"
-            direct_meesho_link = f"{clean_url}{sep}referral={MEESHO_DIRECT_CODE}"
-            log.info(f"[Router] Direct Meesho Affiliate link generated: {direct_meesho_link}")
-            return {
-                "affiliate_url": direct_meesho_link,
-                "platform_used": "Direct Meesho Affiliate",
-                "direct_product_url": clean_url
-            }
+        # Strategy 2: Direct Meesho Affiliate Creator Program (User ID: 374453404)
+        if store_lower == "meesho" and MEESHO_AFFILIATE_ID:
+            import re
+            match = re.search(r"/p/([a-zA-Z0-9]+)", clean_url)
+            ext_id = match.group(1) if match else ""
+            if ext_id:
+                direct_meesho_url = f"https://www.meesho.com/af_invite/{MEESHO_AFFILIATE_ID}:instagram_reels:0?ext_id={ext_id}&utm_source=instagram_reels"
+                log.info(f"[Router] Direct Meesho Creator Link generated for User ID {MEESHO_AFFILIATE_ID}: {direct_meesho_url}")
+                return {
+                    "affiliate_url": direct_meesho_url,
+                    "platform_used": f"Direct Meesho Creator ({MEESHO_AFFILIATE_ID})",
+                    "direct_product_url": clean_url
+                }
+            elif MEESHO_DIRECT_CODE:
+                sep = "&" if "?" in clean_url else "?"
+                direct_meesho_link = f"{clean_url}{sep}referral={MEESHO_DIRECT_CODE}"
+                return {
+                    "affiliate_url": direct_meesho_link,
+                    "platform_used": "Direct Meesho Referral",
+                    "direct_product_url": clean_url
+                }
+
 
         # Strategy 3: Direct Myntra Affiliate Program
         if store_lower == "myntra" and MYNTRA_AFFILIATE_TAG:
