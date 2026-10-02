@@ -47,14 +47,18 @@ class GoogleVeoDirectAPI:
         timestamp = int(time.time())
         dest_mp4 = self.output_dir / f"VEO_API_{slug.upper()}_{timestamp}.mp4"
 
-        # 1. Construct the exact trained UGC Veo prompt
+        # 1. Decoded Pinterest-Video-3 Aesthetic Visual Prompt Blueprint
         prompt = (
-            f"Hyper-realistic 4K 60fps POV camera angle of real human hands unboxing a delivery parcel, "
-            f"pulling out a {product_title}, unfolding the soft fabric texture towards the daylight camera. "
-            f"Picture-in-picture model wearing the {product_title} shown in bottom-right corner. "
-            f"Aesthetic headline '{product_title[:20]} Unboxing ✨' on top. "
-            f"No voiceover, natural ambient sound, photorealistic physical weight, zero watermark, 9:16 vertical."
+            f"Hyper-realistic 4K 60fps vertical 9:16 aesthetic unboxing reel. "
+            f"Background: Clean white linen wall with vertical hanging green ivy leaf vine garlands. "
+            f"Action 1: Real human hands unzipping a clear plastic pouch package revealing a fresh {product_title}. "
+            f"Action 2: Hands unfolding the soft fabric, showing dori tassels, neckline embroidery, and material shine. "
+            f"Action 3: Hands holding up the complete full-length {product_title} against the vine backdrop. "
+            f"Overlay: Floating picture-in-picture creator mirror-selfie outfit try-on sticker in the top-left corner. "
+            f"Header text: Curved bold pink and yellow text '🌸 Meesho Viral {product_title[:20]} 🌸' on top. "
+            f"Lighting: Soft bright indoor daylight studio light, ultra-detailed fabric textures, 60fps motion, zero watermark."
         )
+
 
         log.info("⚡ [GoogleVeoDirectAPI] Calling Google Veo API for '%s'...", product_title)
         log.info("Prompt:\n%s", prompt)
