@@ -1,0 +1,66 @@
+name: Google Pro Veo 24/7 Cloud Video Studio
+
+on:
+  schedule:
+    # Runs 2 times daily on cloud: 10:00 AM IST and 8:00 PM IST
+    - cron: '30 4 * * *'
+    - cron: '30 14 * * *'
+
+  workflow_dispatch:
+    inputs:
+      product_name:
+        description: 'Product Name / Query to Unbox (Leave empty for Auto-Trends)'
+        required: false
+        default: 'Meesho Viral Floral Anarkali Kurti Set'
+
+permissions:
+  contents: write
+
+jobs:
+  produce-veo-video:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install FFmpeg & System Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 libxcomposite1 libxdamage1 libxrandr2 libgbm1 libasound2
+
+      - name: Install Python Dependencies & Playwright
+        run: |
+          python -m pip install --upgrade pip
+          pip install playwright requests beautifulsoup4 pillow
+          playwright install chromium
+
+      - name: Execute Google Pro Cookie-Based Veo Generation
+        env:
+          GOOGLE_COOKIES_B64: ${{ secrets.GOOGLE_COOKIES_B64 }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          mkdir -p data
+          # If cookies secret exists, restore them for cloud authentication
+          if [ -n "$GOOGLE_COOKIES_B64" ]; then
+            printf '%s' "$GOOGLE_COOKIES_B64" | base64 -d > data/google_session_cookie.json
+          fi
+
+          PRODUCT="${{ github.event.inputs.product_name || 'Meesho Viral Floral Anarkali Kurti Set' }}"
+          python run_google_pro_veo.py "$PRODUCT"
+
+      - name: Upload Finished Videos as Cloud Artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: google-pro-veo-videos
+          path: data/veo_pro_generated_videos/*.mp4
+          retention-days: 14

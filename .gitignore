@@ -32,7 +32,22 @@ data/seen/
 data/video_briefs/
 data/*.html
 data/llms/
+data/browser_sessions/
+data/combo_lookbook_videos/
+data/digital_products/
+data/genz_colorways_videos/
+data/multi_haul_videos/
+data/storefront/
+data/veo_cloud_videos/
+data/universal_meesho_videos/
+data/voiced_reels/
+data/clean_videos/
 *.log
+*.mp4
+*.webm
+*.png
+*.jpg
+*.jpeg
 
 # ---------------------------------------------------------------------------
 # Editor / OS
@@ -41,3 +56,4 @@ data/llms/
 .idea/
 .DS_Store
 Thumbs.db
+
