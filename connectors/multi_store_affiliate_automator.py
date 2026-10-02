@@ -141,15 +141,24 @@ class MultiStoreAffiliateAutomator:
             caption=f"🎥 *GOOGLE VEO AI REEL READY FOR INSTAGRAM!*\n\n{caption}"
         )
 
+        # 7. Auto-Publish directly to Instagram Reels if configured
+        from connectors.instagram_auto_poster import InstagramAutoPoster
+        insta_poster = InstagramAutoPoster()
+        insta_res = insta_poster.publish_reel(video_path=voiced_video_path, caption=caption)
+        log.info(f"Instagram Auto-Poster Result: {insta_res['status']}")
+
         return {
             "status": "success",
             "product_name": product_name,
             "store": store_name,
-            "earnkaro_link": affiliate_link,
+            "affiliate_link": affiliate_link,
+            "platform_used": platform_name,
             "voiced_video_path": str(voiced_video_path),
             "storefront_url": "data/storefront/index.html",
-            "telegram_delivered": True
+            "telegram_delivered": True,
+            "instagram_auto_post": insta_res
         }
+
 
 
 if __name__ == "__main__":
