@@ -106,17 +106,23 @@ class MultiStoreAffiliateAutomator:
         cleaner = WatermarkRemover()
         clean_veo_path = cleaner.clean_video(veo_raw_path)
 
-        # 4. Generate GenZ Female Voiceover & Layer Audio
-        voice_script = (
-            f"Hey girls! Found this super aesthetic {product_name} on {store_name.capitalize()}! "
-            f"Original price was {int(original_price)} rupees, but you can get it for just {int(deal_price)} rupees right now. "
-            f"Direct buying link is in Telegram caption and storefront bio! Grab it before it sells out!"
-        )
-        voiced_video_path = self.audio_synth.synthesize_voiced_reel(
-            video_path=clean_veo_path,
-            script_text=voice_script,
-            voice_id="21m00Tcm4TlvDq8ikWAM"
-        )
+        # 4. Pure Aesthetic Unboxing Visual Video (No Voiceover as requested)
+        enable_voiceover = os.getenv("ENABLE_VOICEOVER", "false").lower() == "true"
+        if enable_voiceover:
+            voice_script = (
+                f"Hey girls! Found this super aesthetic {product_name} on {store_name.capitalize()}! "
+                f"Original price was {int(original_price)} rupees, but you can get it for just {int(deal_price)} rupees right now. "
+                f"Direct buying link is in Telegram caption and storefront bio! Grab it before it sells out!"
+            )
+            final_video_path = self.audio_synth.synthesize_voiced_reel(
+                video_path=clean_veo_path,
+                script_text=voice_script,
+                voice_id="21m00Tcm4TlvDq8ikWAM"
+            )
+        else:
+            log.info("🎬 Outputting pure aesthetic unboxing visual video (voiceover disabled as requested).")
+            final_video_path = clean_veo_path
+
 
         # 5. Build Instagram Caption with AFFILIATE TRACKING LINK (EarnKaro User ID 3360368)
         direct_product_link = raw_product_url.strip() if raw_product_url.startswith("http") else f"https://www.{store_name.lower()}.com"
@@ -135,16 +141,16 @@ class MultiStoreAffiliateAutomator:
             f"#GenZFashion #{store_name.capitalize()}Haul #OOTDIndia #AestheticOutfits #EarnKaro #VeoAI"
         )
 
-        # 6. Deliver Voiced Veo MP4 directly to Telegram Bot
+        # 6. Deliver Clean Aesthetic Veo MP4 directly to Telegram Bot
         self.telegram.send_video_file(
-            video_path=voiced_video_path,
-            caption=f"🎥 *GOOGLE VEO AI REEL READY FOR INSTAGRAM!*\n\n{caption}"
+            video_path=final_video_path,
+            caption=f"🎥 *GOOGLE VEO AI AESTHETIC UNBOXING REEL READY!*\n\n{caption}"
         )
 
         # 7. Auto-Publish directly to Instagram Reels if configured
         from connectors.instagram_auto_poster import InstagramAutoPoster
         insta_poster = InstagramAutoPoster()
-        insta_res = insta_poster.publish_reel(video_path=voiced_video_path, caption=caption)
+        insta_res = insta_poster.publish_reel(video_path=final_video_path, caption=caption)
         log.info(f"Instagram Auto-Poster Result: {insta_res['status']}")
 
         return {
@@ -153,11 +159,12 @@ class MultiStoreAffiliateAutomator:
             "store": store_name,
             "affiliate_link": affiliate_link,
             "platform_used": platform_name,
-            "voiced_video_path": str(voiced_video_path),
+            "video_path": str(final_video_path),
             "storefront_url": "data/storefront/index.html",
             "telegram_delivered": True,
             "instagram_auto_post": insta_res
         }
+
 
 
 
