@@ -7,7 +7,7 @@ from __future__ import annotations
 
 import os
 
-from connectors.http import post_json
+from connectors.http_client_utils import post_json
 from core.logging_utils import get_logger
 
 log = get_logger("indexnow")

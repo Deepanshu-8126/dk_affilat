@@ -18,7 +18,7 @@ import os
 import random
 from dataclasses import dataclass
 
-from connectors.http import get_json
+from connectors.http_client_utils import get_json
 from core.logging_utils import get_logger
 from core.models import TrendTopic
 from core.state import already_covered, keyword_boost

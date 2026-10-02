@@ -15,7 +15,7 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
-from connectors.http import request
+from connectors.http_client_utils import request
 from core.logging_utils import get_logger
 
 log = get_logger("image")

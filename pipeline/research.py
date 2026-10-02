@@ -13,7 +13,7 @@ import json
 import os
 
 from connectors.firecrawl import scrape_many
-from connectors.http import get_json
+from connectors.http_client_utils import get_json
 from connectors.openmontage import deep_research_urls
 from core.llm import Brain
 from core.logging_utils import get_logger

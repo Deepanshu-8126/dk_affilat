@@ -184,8 +184,32 @@ class TelegramVideoBot:
                     from connectors.multi_store_affiliate_automator import MultiStoreAffiliateAutomator
                     automator = MultiStoreAffiliateAutomator()
 
+                    # Handle Meesho Affiliate Collection URLs (affiliate.meesho.com/collection/...)
+                    if "affiliate.meesho.com/collection/" in low_text or "meesho.com/collection/" in low_text:
+                        from connectors.meesho_affiliate_collection_parser import MeeshoAffiliateCollectionParser
+                        self.send_message(f"🔍 *Detected Meesho Affiliate Collection!*\nParsing products & direct affiliate tracking links...")
+                        collection_items = MeeshoAffiliateCollectionParser.fetch_collection_products(text)
+                        
+                        if not collection_items:
+                            self.send_message("⚠️ Could not extract products from Meesho collection link. Please check if collection link is public.")
+                            continue
+
+                        self.send_message(f"✨ *Found {len(collection_items)} curated products in collection!*\nGenerating 60fps Veo AI Reels & Storefront listings...")
+                        for idx, item in enumerate(collection_items, 1):
+                            self.send_message(f"🎬 Processing Product {idx}/{len(collection_items)}: `{item['title']}` (₹{item['price']})...")
+                            automator.process_product(
+                                product_name=item["title"],
+                                store_name="Meesho",
+                                raw_product_url=item["affiliate_link"],
+                                original_price=item["mrp"],
+                                deal_price=item["price"],
+                                category="Meesho Collection Find",
+                                image_path=item["main_image"]
+                            )
+                        log.info("✅ Finished processing all %d collection items!", len(collection_items))
+                        continue
+
                     # Detect store from link or text
-                    low_text = text.lower()
                     if "myntra.com" in low_text or "/myntra" in low_text:
                         store_name = "Myntra"
                     elif "ajio.com" in low_text or "/ajio" in low_text:
@@ -213,6 +237,7 @@ class TelegramVideoBot:
                     )
 
                     log.info("✅ Telegram auto-processed item for: %s", clean_title)
+
 
             except Exception as e:
                 log.warning("Telegram polling iteration notice: %s", e)

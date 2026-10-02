@@ -14,7 +14,7 @@ import os
 from dataclasses import dataclass
 from datetime import date, timedelta
 
-from connectors.http import get_json
+from connectors.http_client_utils import get_json
 from core.logging_utils import get_logger
 
 log = get_logger("github")

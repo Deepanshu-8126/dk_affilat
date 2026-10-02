@@ -11,7 +11,7 @@ from __future__ import annotations
 import os
 import re
 
-from connectors.http import get_json, post_json
+from connectors.http_client_utils import get_json, post_json
 from core.logging_utils import get_logger
 
 log = get_logger("syndicate")
