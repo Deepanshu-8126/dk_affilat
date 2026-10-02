@@ -177,6 +177,7 @@ class TelegramVideoBot:
                     # Set active chat id
                     self.chat_id = str(chat_id)
                     log.info("Received command from phone: '%s'", text)
+                    low_text = text.lower()
 
                     self.send_message(f"⏳ *Processing request from your phone:* `{text}`\n\nCreating EarnKaro 1-Wallet Link + 1080x1920 60fps Voiced Reel + Updating Storefront...")
 
@@ -186,6 +187,7 @@ class TelegramVideoBot:
 
                     # Handle Meesho Affiliate Collection URLs (affiliate.meesho.com/collection/...)
                     if "affiliate.meesho.com/collection/" in low_text or "meesho.com/collection/" in low_text:
+
                         from connectors.meesho_affiliate_collection_parser import MeeshoAffiliateCollectionParser
                         self.send_message(f"🔍 *Detected Meesho Affiliate Collection!*\nParsing products & direct affiliate tracking links...")
                         collection_items = MeeshoAffiliateCollectionParser.fetch_collection_products(text)
