@@ -12,41 +12,34 @@ from __future__ import annotations
 import json
 import os
 import urllib.parse
+import sys
 from pathlib import Path
 from typing import Any
 
+root_dir = Path(__file__).resolve().parent.parent
+if str(root_dir) not in sys.path:
+    sys.path.insert(0, str(root_dir))
+
 from core.logging_utils import get_logger
+from connectors.universal_affiliate_router import UniversalAffiliateRouter
+
 
 log = get_logger("creator_storefront")
 
+
 EARNKARO_USER_ID = os.getenv("EARNKARO_USER_ID", "3360368")
-MEESHO_DIRECT_CODE = os.getenv("MEESHO_DIRECT_CODE", "")  # Direct Meesho Creator/Affiliate Code if available
 CREATOR_NAME = os.getenv("CREATOR_NAME", "Aesthetic Fashion Closet")
 
 
 def make_earnkaro_affiliate_link(product_url: str, user_id: str = EARNKARO_USER_ID) -> str:
     """
-    Smart Dual Affiliate Link Generator:
-    1. If product_url is already a Direct Meesho Affiliate Share Link (e.g., meesho.com/s/...), retains it 100% directly.
-    2. If MEESHO_DIRECT_CODE is configured and it's a Meesho link, attaches direct Meesho affiliate tracking.
-    3. Otherwise, converts Meesho, Myntra, Ajio, Flipkart, Shopsy, Nykaa into EarnKaro 1-wallet tracking link.
+    Universal Multi-Platform Affiliate Link Generator:
+    Delegates to UniversalAffiliateRouter to auto-route between Direct Meesho Affiliate, Direct Myntra,
+    Direct Flipkart, Wishlink, and EarnKaro 1-wallet links without any page blockages.
     """
-    clean_url = product_url.strip()
-    if not clean_url.startswith("http"):
-        clean_url = "https://www.meesho.com"
-    
-    # Check if already a Direct Meesho Share / Affiliate link (e.g., https://www.meesho.com/s/p/...)
-    if "meesho.com/s/" in clean_url or "referral=" in clean_url:
-        return clean_url
-    
-    # Direct Meesho Affiliate Code Override (if user has direct Meesho Creator Account)
-    if "meesho.com" in clean_url and MEESHO_DIRECT_CODE:
-        separator = "&" if "?" in clean_url else "?"
-        return f"{clean_url}{separator}referral={MEESHO_DIRECT_CODE}"
-    
-    # Default: Universal EarnKaro Affiliate Link (1-Wallet Pooling)
-    encoded = urllib.parse.quote_plus(clean_url)
-    return f"https://ekaro.in/enkr?r={user_id}&url={encoded}"
+    res = UniversalAffiliateRouter.generate_link(product_url)
+    return res["affiliate_url"]
+
 
 
 

@@ -25,11 +25,13 @@ if str(root_dir) not in sys.path:
 
 from core.logging_utils import get_logger
 from connectors.creator_storefront_generator import CreatorStorefrontGenerator, make_earnkaro_affiliate_link
+from connectors.universal_affiliate_router import UniversalAffiliateRouter
 from connectors.universal_meesho_engine import UniversalMeeshoEngine
 from connectors.reels_audio_synthesizer import ReelsAudioSynthesizer
 from connectors.telegram_video_bot import TelegramVideoBot
 
 log = get_logger("multi_store_automator")
+
 
 # Trending Instagram Audio Recommendations for GenZ Female Niche
 TRENDING_INSTAGRAM_AUDIOS = [
@@ -67,9 +69,12 @@ class MultiStoreAffiliateAutomator:
         """
         log.info(f"Processing {product_name} from {store_name}...")
 
-        # 1. EarnKaro Affiliate Link (1-Wallet Pooling)
-        affiliate_link = make_earnkaro_affiliate_link(raw_product_url)
+        # 1. Multi-Platform Affiliate Link (Direct Meesho, Direct Myntra, Direct Flipkart, or EarnKaro)
+        aff_res = UniversalAffiliateRouter.generate_link(raw_product_url, store_name)
+        affiliate_link = aff_res["affiliate_url"]
+        platform_name = aff_res["platform_used"]
         savings_pct = int(((original_price - deal_price) / original_price) * 100) if original_price > deal_price else 25
+
 
         # 2. Add to Creator Storefront Catalog
         discount_pct = f"{savings_pct}% OFF"
