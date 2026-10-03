@@ -111,8 +111,36 @@ class GenZInfluencerPoseLibrary:
             ),
             "camera_angle": "Eye-level full-body studio portrait angle",
             "lighting": "Soft gradient studio rim lighting with subtle floor reflection"
+        },
+        "CYBER_RED_NEON_GRID_LEAN": {
+            "name": "Cyberpunk Red Neon Grid Wall Lean Pose",
+            "pose_description": (
+                "Model leaning back gracefully against a vibrant red neon LED grid tiled wall, arching back slightly with waist exposed, "
+                "wearing a black micro crop baby tee + loose trackpants + dark Y2K sunglasses tilted down her nose."
+            ),
+            "camera_angle": "Low-to-mid angle high-fashion editorial portrait shot",
+            "lighting": "Atmospheric red neon LED ambient light glow with sharp edge highlights"
+        },
+        "NIRVANA_BAND_TEE_STAIRS_FLASH": {
+            "name": "Night Flash Concrete Stairs Band Tee Pose",
+            "pose_description": (
+                "Model sitting on urban concrete outdoor stairs at night, wearing a dark NY Yankees cap + vintage yellow NIRVANA band tee + "
+                "cream oversized cardigan + dark green cargo trousers + Nike Dunk High sneakers, looking into camera."
+            ),
+            "camera_angle": "Slightly elevated night portrait shot",
+            "lighting": "Direct hard direct camera flash photography at night"
+        },
+        "DENIM_JORTS_ICED_COFFEE_STREET": {
+            "name": "Street Corner Iced Coffee & Denim Jorts Pose",
+            "pose_description": (
+                "Model standing on a sunlit urban street corner holding a clear iced coffee cup with straw, wearing a navy #91 California jersey tee + "
+                "baggy long denim jorts + white crew socks + Adidas Samba sneakers, casually touching her cap."
+            ),
+            "camera_angle": "Full-length 9:16 vertical street style shot",
+            "lighting": "Bright natural sunlit street shadows"
         }
     }
+
 
 
     @classmethod
