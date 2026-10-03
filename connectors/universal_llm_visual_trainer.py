@@ -22,12 +22,15 @@ if str(root_dir) not in sys.path:
 
 from core.logging_utils import get_logger
 
+from connectors.model_face_identity_trainer import ModelFaceIdentityTrainer
+
 log = get_logger("llm_visual_trainer")
 
 
 class UniversalLLMVisualTrainer:
     """
     Prompt library manager for training Gemini Vision and Veo AI engines on viral Pinterest Meesho layouts.
+    Now includes user's trained model face identity.
     """
 
     BLUEPRINT_LIBRARY = {
@@ -35,7 +38,8 @@ class UniversalLLMVisualTrainer:
             "description": "Full-body model try-on with floating product cards, white pointer lines, price badges",
             "veo_prompt_template": (
                 "Hyper-realistic 4K 60fps vertical 9:16 Pinterest aesthetic outfit reel. "
-                "Center: Female model wearing {top_name} and {bottom_name} in an aesthetic warm daylight bedroom with Kinfolk books on table. "
+                "Model: {model_face}. "
+                "Center: Model wearing {top_name} and {bottom_name} in an aesthetic warm daylight bedroom with Kinfolk books on table. "
                 "Top-Left Card: Rounded product card of {top_name} showing price '₹{top_price}'. "
                 "Bottom-Right Card: Rounded product card of {bottom_name} showing price '₹{bottom_price}'. "
                 "Bottom-Left Badge: Rounded white badge 'Total Outfit Price ₹{total_price} | Style + Comfort = You ❤️'. "
@@ -48,6 +52,7 @@ class UniversalLLMVisualTrainer:
                 "pointer_lines": True
             }
         },
+
         "PINTEREST_4PIECE_FLATLAY": {
             "description": "4-item aesthetic flatlay combo (Tee + Pants + Retro Sneakers + Y2K Bag) on white linen",
             "veo_prompt_template": (
@@ -90,13 +95,16 @@ class UniversalLLMVisualTrainer:
         blueprint = cls.BLUEPRINT_LIBRARY.get(blueprint_key, cls.BLUEPRINT_LIBRARY["PINTEREST_COLLAGE_CARD_SPLIT"])
         total_price = top_price + bottom_price
 
+        model_face = ModelFaceIdentityTrainer.MODEL_PROMPT_TOKENS["facial_features"]
         prompt_str = blueprint["veo_prompt_template"].format(
+            model_face=model_face,
             top_name=top_name,
             bottom_name=bottom_name,
             top_price=top_price,
             bottom_price=bottom_price,
             total_price=total_price
         )
+
 
         return {
             "blueprint_used": blueprint_key,
