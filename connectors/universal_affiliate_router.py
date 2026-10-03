@@ -102,24 +102,28 @@ class UniversalAffiliateRouter:
         # Strategy 2: Direct Meesho Affiliate Creator Program (User ID: 374453404)
         if store_lower == "meesho" and MEESHO_AFFILIATE_ID:
             import re
-            match = re.search(r"/p/([a-zA-Z0-9]+)", clean_url)
-            ext_id = match.group(1) if match else ""
-            if ext_id:
+            p_id_match = re.search(r"[?&]p_id=([0-9]+)", clean_url) or re.search(r"/s/p/([0-9]+)", clean_url) or re.search(r"/p/([0-9]+)", clean_url)
+            p_id = p_id_match.group(1) if p_id_match else ""
+
+            ext_id_match = re.search(r"[?&]ext_id=([a-zA-Z0-9]+)", clean_url) or re.search(r"/s/p/([a-zA-Z0-9]+)", clean_url) or re.search(r"/p/([a-zA-Z0-9]+)", clean_url)
+            ext_id = ext_id_match.group(1) if ext_id_match else ""
+
+            if p_id and ext_id:
+                direct_meesho_url = f"https://www.meesho.com/af_invite/{MEESHO_AFFILIATE_ID}:instagram_reels:0?p_id={p_id}&ext_id={ext_id}&utm_source=instagram_reels"
+            elif ext_id:
                 direct_meesho_url = f"https://www.meesho.com/af_invite/{MEESHO_AFFILIATE_ID}:instagram_reels:0?ext_id={ext_id}&utm_source=instagram_reels"
-                log.info(f"[Router] Direct Meesho Creator Link generated for User ID {MEESHO_AFFILIATE_ID}: {direct_meesho_url}")
-                return {
-                    "affiliate_url": direct_meesho_url,
-                    "platform_used": f"Direct Meesho Creator ({MEESHO_AFFILIATE_ID})",
-                    "direct_product_url": clean_url
-                }
-            elif MEESHO_DIRECT_CODE:
+            elif p_id:
+                direct_meesho_url = f"https://www.meesho.com/af_invite/{MEESHO_AFFILIATE_ID}:instagram_reels:0?p_id={p_id}&utm_source=instagram_reels"
+            else:
                 sep = "&" if "?" in clean_url else "?"
-                direct_meesho_link = f"{clean_url}{sep}referral={MEESHO_DIRECT_CODE}"
-                return {
-                    "affiliate_url": direct_meesho_link,
-                    "platform_used": "Direct Meesho Referral",
-                    "direct_product_url": clean_url
-                }
+                direct_meesho_url = f"{clean_url}{sep}af_invite={MEESHO_AFFILIATE_ID}&utm_source=instagram_reels"
+
+            log.info(f"[Router] Direct Meesho Creator Link generated for User ID {MEESHO_AFFILIATE_ID}: {direct_meesho_url}")
+            return {
+                "affiliate_url": direct_meesho_url,
+                "platform_used": f"Direct Meesho Creator ({MEESHO_AFFILIATE_ID})",
+                "direct_product_url": clean_url
+            }
 
 
         # Strategy 3: Direct Myntra Affiliate Program
