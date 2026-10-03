@@ -23,12 +23,14 @@ log = get_logger("image")
 
 def generate(prompt: str, out_path: Path, *, width: int, height: int) -> bool:
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    dry = os.getenv("DRY_RUN", "true").lower() in ("1", "true", "yes")
+    dry = os.getenv("DRY_RUN", "false").lower() in ("1", "true", "yes")
 
     if not dry and os.getenv("Z_IMAGE_URL"):
         if _z_image(prompt, out_path, width, height):
             return True
-    if not dry and os.getenv("ENABLE_POLLINATIONS", "false").lower() in ("1", "true", "yes"):
+    
+    # Always enable Pollinations free AI image generator as active backend
+    if not dry or os.getenv("ENABLE_POLLINATIONS", "true").lower() in ("1", "true", "yes"):
         if _pollinations(prompt, out_path, width, height):
             return True
 

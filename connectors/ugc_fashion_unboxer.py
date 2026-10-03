@@ -218,6 +218,23 @@ class UGCFashionUnboxingStudio:
 
         log.info("Generating UGC Fashion Video for: '%s'", item['title'])
 
+        import re
+        slug = re.sub(r"[^a-zA-Z0-9]+", "_", item['title'][:15]).lower().strip("_")
+
+        # Auto-generate photorealistic AI Model Try-on image if ref_image is missing
+        if not ref_image or not ref_image.exists():
+            from connectors.model_face_identity_trainer import ModelFaceIdentityTrainer
+            from connectors.image_backends import generate as generate_ai_image
+
+            ai_prompt = ModelFaceIdentityTrainer.get_veo_facial_conditioning_prompt(
+                outfit_name=f"{item['title']}, {item['fabric']}",
+                pose_key="GRAFFITI_TUNNEL_FLASH_POSE"
+            )
+            gen_img_path = self.output_dir / f"model_tryon_{slug}.jpg"
+            log.info("📸 Auto-generating photorealistic AI model try-on image for: %s", item['title'])
+            if generate_ai_image(ai_prompt, gen_img_path, width=768, height=1024):
+                ref_image = gen_img_path
+
         # Render composite frame with REAL reference image inset
         frame_path = self.render_ugc_composite_frame(item, model_inset_img=ref_image)
 
