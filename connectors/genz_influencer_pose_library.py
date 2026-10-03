@@ -138,10 +138,71 @@ class GenZInfluencerPoseLibrary:
             ),
             "camera_angle": "Full-length 9:16 vertical street style shot",
             "lighting": "Bright natural sunlit street shadows"
+        },
+        "GRAFFITI_TUNNEL_FLASH_POSE": {
+            "name": "Underground Spray-Paint Graffiti Wall Flash Pose",
+            "pose_description": (
+                "Model standing or leaning casually against a vibrant urban spray-paint graffiti wall, wearing a backwards black baseball cap + "
+                "clear-frame optical glasses + off-shoulder Y2K crop top + low-rise baggy cargo jeans with exposed waistband and silver chain belt."
+            ),
+            "camera_angle": "Eye-level medium portrait shot with slight tilt",
+            "lighting": "Hard camera direct flash photography creating dramatic urban night mood and sharp edge highlights"
+        },
+        "BIRDS_EYE_90DEG_HIGH_ANGLE": {
+            "name": "90-Degree Top-Down Bird's Eye POV Selfie Pose",
+            "pose_description": (
+                "Camera positioned directly overhead 90 degrees looking straight down at model. Model standing or sitting, looking up into camera lens "
+                "wearing slim black oval sunglasses, extending one hand towards camera in a playful candid gesture."
+            ),
+            "camera_angle": "90-degree steep top-down overhead perspective",
+            "lighting": "Bright high-key studio or outdoor daylight"
+        },
+        "FISHEYE_NEON_CONVENIENCE_STORE": {
+            "name": "12mm Fisheye Green Neon Convenience Store Pose",
+            "pose_description": (
+                "Model standing in front of a glowing green neon convenience store / arcade background, wearing a black ribbed crop top + "
+                "wide-leg denim jeans + slim black sunglasses, hands on hips with distinctive circular fisheye lens curvature."
+            ),
+            "camera_angle": "12mm ultra-wide fisheye lens distortion perspective",
+            "lighting": "Atmospheric green neon glow with high-contrast ambient reflections"
+        },
+        "HAND_TO_CAMERA_FORESHORTENING": {
+            "name": "Hand-to-Lens Perspective Foreshortening Pose",
+            "pose_description": (
+                "Model crouching or standing on urban asphalt street, reaching one hand directly forward towards the camera lens, "
+                "creating dramatic perspective foreshortening with fingers in foreground close-up while face and outfit remain in sharp focus."
+            ),
+            "camera_angle": "Ultra-wide low-angle perspective shot",
+            "lighting": "Natural overcast open-sky daylight"
+        },
+        "SUBWAY_TRAIN_SEAT_LEAN": {
+            "name": "Metro Public Subway Seat Transit Lean",
+            "pose_description": (
+                "Model sitting relaxed on a public metro subway car blue seat, leaning back against stainless steel handrails, "
+                "wearing a graphic streetwear tee + camo cargo pants + tilted NY cap, resting her chin thoughtfully on her hand."
+            ),
+            "camera_angle": "Medium interior transit portrait shot",
+            "lighting": "Cool fluorescent subway train ambient lighting"
+        },
+        "ROOFTOP_GROUND_SQUAT_FUNKY": {
+            "name": "Funky Yellow Sunglasses Rooftop Squat Pose",
+            "pose_description": (
+                "Model squatting low on open rooftop concrete ground under bright blue sky with white clouds, wearing tinted yellow oval sunglasses, "
+                "popping her tongue out playfully while adjusting her glasses frame with manicured fingers."
+            ),
+            "camera_angle": "Low-angle wide sky-frame perspective",
+            "lighting": "Direct bright sunlight with high-contrast blue sky background"
+        },
+        "CROSSWALK_NIGHT_FLOOR_SPREAD": {
+            "name": "Night Street Crosswalk Zebra Spread Pose",
+            "pose_description": (
+                "Model sitting flat on street crosswalk white zebra pavement at night, legs spread casually wide in a low-angle wide perspective, "
+                "wearing black micro tee + wide-leg vintage wash jeans + chunky white sneakers, looking into camera."
+            ),
+            "camera_angle": "Ground-level wide low perspective shot",
+            "lighting": "Street lamp ambient glow with subtle passing car headlight rim light"
         }
     }
-
-
 
     @classmethod
     def get_pose(cls, pose_key: str | None = None) -> Dict[str, Any]:
@@ -176,5 +237,6 @@ class GenZInfluencerPoseLibrary:
 
 if __name__ == "__main__":
     lib = GenZInfluencerPoseLibrary()
-    print("\n[Sample Trained GenZ Influencer Pose Prompt]:")
-    print(lib.format_influencer_prompt("a lavender flame knit sweater and black wide-leg denim jeans", "MIRROR_SELFIE_FLASH_POSE"))
+    print("\n[Sample New High-Editorial GenZ Pose Prompt]:")
+    print(lib.format_influencer_prompt("a vintage Y2K crop tee and low-rise baggy cargos", "GRAFFITI_TUNNEL_FLASH_POSE"))
+
