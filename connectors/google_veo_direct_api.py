@@ -47,17 +47,17 @@ class GoogleVeoDirectAPI:
         timestamp = int(time.time())
         dest_mp4 = self.output_dir / f"VEO_API_{slug.upper()}_{timestamp}.mp4"
 
-        # 1. Decoded Pinterest-Video-3 Aesthetic Visual Prompt Blueprint
-        prompt = (
-            f"Hyper-realistic 4K 60fps vertical 9:16 aesthetic unboxing reel. "
-            f"Background: Clean white linen wall with vertical hanging green ivy leaf vine garlands. "
-            f"Action 1: Real human hands unzipping a clear plastic pouch package revealing a fresh {product_title}. "
-            f"Action 2: Hands unfolding the soft fabric, showing dori tassels, neckline embroidery, and material shine. "
-            f"Action 3: Hands holding up the complete full-length {product_title} against the vine backdrop. "
-            f"Overlay: Floating picture-in-picture creator mirror-selfie outfit try-on sticker in the top-left corner. "
-            f"Header text: Curved bold pink and yellow text '🌸 Meesho Viral {product_title[:20]} 🌸' on top. "
-            f"Lighting: Soft bright indoor daylight studio light, ultra-detailed fabric textures, 60fps motion, zero watermark."
+        # 1. Trained Pinterest Collage & Visual Prompt Blueprint Library
+        from connectors.universal_llm_visual_trainer import UniversalLLMVisualTrainer
+        trained_info = UniversalLLMVisualTrainer.get_trained_prompt(
+            blueprint_key="PINTEREST_COLLAGE_CARD_SPLIT",
+            top_name=product_title,
+            bottom_name="Wide Leg Denim Jeans",
+            top_price=242,
+            bottom_price=690
         )
+        prompt = trained_info["veo_prompt"]
+
 
 
         log.info("⚡ [GoogleVeoDirectAPI] Calling Google Veo API for '%s'...", product_title)
