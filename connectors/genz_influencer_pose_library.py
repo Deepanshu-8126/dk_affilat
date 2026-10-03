@@ -83,8 +83,37 @@ class GenZInfluencerPoseLibrary:
             ),
             "camera_angle": "Vertical top-down flatlay angle",
             "lighting": "Flat even studio daylight"
+        },
+        "LOW_ANGLE_SNEAKER_SQUAT": {
+            "name": "Low-Angle Streetwear Sneaker & Jersey Squat Pose",
+            "pose_description": (
+                "Model squatting/crouching low towards the camera in an oversized varsity jersey and baggy wide-leg jeans, "
+                "resting her chin casually on one hand while staring into the lens, with chunky Nike Dunk Low sneakers "
+                "prominently featured in the foreground close-up perspective."
+            ),
+            "camera_angle": "Low-angle ground-level wide perspective",
+            "lighting": "Clean studio portrait lighting with soft shadow fill"
+        },
+        "OVERSIZED_JERSEY_STREETWEAR": {
+            "name": "Oversized Baseball Jersey & Baggy Jeans Streetwear Pose",
+            "pose_description": (
+                "Model standing in a relaxed streetwear posture wearing an oversized #86 athletic jersey with baggy charcoal denim cargos, "
+                "holding a Y2K shoulder bag with a NY Yankees cap, casually looking at camera."
+            ),
+            "camera_angle": "Full-body vertical 9:16 portrait shot",
+            "lighting": "Natural golden hour sun shadow against urban outdoor wall"
+        },
+        "STUDIO_CUBE_SITTING_POSE": {
+            "name": "Minimalist Studio Cube Sitting Pose (Satomi AI Style)",
+            "pose_description": (
+                "Model sitting casually on a minimalist white studio cube/block in cargo pants and fresh matching sneakers, "
+                "leaning forward with relaxed leg angle against a soft mint gradient studio backdrop."
+            ),
+            "camera_angle": "Eye-level full-body studio portrait angle",
+            "lighting": "Soft gradient studio rim lighting with subtle floor reflection"
         }
     }
+
 
     @classmethod
     def get_pose(cls, pose_key: str | None = None) -> Dict[str, Any]:
