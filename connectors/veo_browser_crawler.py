@@ -33,22 +33,13 @@ class VeoWebAutomationCrawler:
         self.output_dir.mkdir(parents=True, exist_ok=True)
 
     def train_prompt_from_reference(self, product_title: str, category: str = "fashion", mode: str = "unboxing") -> str:
-        """Trained LLM prompt engine that strictly produces the exact reference video format."""
-        if mode == "unboxing":
-            prompt = (
-                f"Authentic 4K 60fps POV camera angle looking down at desk. "
-                f"Real human hands opening delivery courier parcel, pulling out {product_title}, "
-                f"unfolding the fabric texture towards the daylight camera. "
-                f"Picture-in-picture model wearing the {product_title} shown in bottom-right corner. "
-                f"Aesthetic headline '{product_title[:20]} Unboxing ✨' on top. "
-                f"No voiceover, natural ambient sound, hyper-realistic, zero watermark, 9:16 vertical."
-            )
-        else:
-            prompt = (
-                f"4K 60fps top-down POV aesthetic haul video. Multiple {category} outfits neatly laid out on white duvet bed. "
-                f"Hands pick up {product_title}, showcase soft texture, unfold fabric. "
-                f"Natural golden hour sunlight, aesthetic room, 9:16 vertical."
-            )
+        """Trained LLM prompt engine that strictly produces the exact reference video format with trained model face identity."""
+        from connectors.model_face_identity_trainer import ModelFaceIdentityTrainer
+
+        prompt = ModelFaceIdentityTrainer.get_veo_facial_conditioning_prompt(
+            outfit_name=product_title,
+            pose_key="GRAFFITI_TUNNEL_FLASH_POSE"
+        )
         return prompt
 
     async def crawl_and_generate_video(self, target_product: str, target_url: str = "https://labs.google/fx/tools/veo", headless: bool = False) -> dict[str, Any]:
