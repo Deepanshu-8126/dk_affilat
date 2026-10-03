@@ -256,16 +256,31 @@ class UGCFashionUnboxingStudio:
         except Exception as e:
             log.warning("FFmpeg compile error: %s", e)
 
-        caption = (
-            f"✨ {item['hook']}\n\n"
-            f"👗 Outfit: {item['title']}\n"
-            f"💰 Price: {item['sale_price']} (MRP {item['mrp']} - {item['discount']}!)\n"
-            f"🧵 Fabric: {item['fabric']}\n\n"
-            f"👉 How to buy:\n"
-            f"1️⃣ Comment 'LINK' below & I'll DM you the direct Meesho/Amazon link!\n"
-            f"2️⃣ Link in my Bio.\n\n"
-            f"#meeshofinds #outfitunboxing #gothicaesthetic #fashionhaul #meeshohaul #viraloutfits #under500"
-        )
+    def render_pure_fullframe_video(self, item: dict[str, Any], image_path: str | Path) -> dict[str, Any]:
+        """Renders 100% clean, borderless, full-frame 1080x1920 60fps MP4 Reel with ZERO cards or overlays."""
+        img_p = Path(image_path)
+        slug = re.sub(r"[^a-zA-Z0-9]+", "_", item['title'][:15]).lower().strip("_")
+        target_mp4 = self.output_dir / f"PURE_FULLFRAME_{slug.upper()}.mp4"
+
+        cmd = [
+            "ffmpeg", "-y",
+            "-loop", "1", "-i", str(img_p),
+            "-t", "8",
+            "-vf", "scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,fps=60",
+            "-c:v", "libx264", "-pix_fmt", "yuv420p",
+            str(target_mp4)
+        ]
+        try:
+            subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+            log.info("Pure Full-Frame Reel Rendered: %s", target_mp4)
+        except Exception as e:
+            log.warning("FFmpeg compile error: %s", e)
+
+        return {
+            "status": "success",
+            "video_path": str(target_mp4),
+            "mode": "pure_fullframe"
+        }
 
         return {
             "status": "success",
