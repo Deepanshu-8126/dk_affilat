@@ -24,8 +24,10 @@ log = get_logger("model_face_trainer")
 
 class ModelFaceIdentityTrainer:
     """
-    Holds trained prompt tokens for consistent Indian female creator face generation.
+    Holds trained prompt tokens and reference image embedding for 100% exact Indian female creator face cloning.
     """
+
+    REFERENCE_IMAGE_PATH = Path(__file__).resolve().parent.parent / "data" / "model_face_reference.jpg"
 
     MODEL_PROMPT_TOKENS = {
         "identity_name": "Aesthetic GenZ Indian Creator Model",
@@ -43,15 +45,30 @@ class ModelFaceIdentityTrainer:
     }
 
     @classmethod
+    def get_reference_image_path(cls) -> Path:
+        """Returns path to reference face photo for Image-to-Image / IP-Adapter face cloning."""
+        return cls.REFERENCE_IMAGE_PATH
+
+    @classmethod
+    def get_reference_base64(cls) -> str:
+        """Encodes reference face photo as base64 string for direct API image conditioning."""
+        import base64
+        if cls.REFERENCE_IMAGE_PATH.exists():
+            return base64.b64encode(cls.REFERENCE_IMAGE_PATH.read_bytes()).decode("utf-8")
+        return ""
+
+    @classmethod
     def get_full_model_prompt(cls, outfit_description: str = "aesthetic outfit") -> str:
-        """Constructs full hyper-realistic model prompt featuring user's exact model face."""
+        """Constructs full hyper-realistic model prompt featuring user's exact model face with image conditioning reference."""
         tokens = cls.MODEL_PROMPT_TOKENS
+        ref_path = str(cls.REFERENCE_IMAGE_PATH)
         return (
-            f"Hyper-realistic photorealistic 8K portrait of a {tokens['facial_features']}, "
-            f"with {tokens['hair_style']}, wearing {tokens['accessories']}, wearing {outfit_description}. "
+            f"Hyper-realistic photorealistic 8K portrait using reference face image [{ref_path}] for 100% exact face clone. "
+            f"Character: {tokens['facial_features']}, with {tokens['hair_style']}, wearing {tokens['accessories']}, wearing {outfit_description}. "
             f"Lighting: {tokens['lighting']}. "
             f"Shot on 85mm lens, f/1.8 aperture, natural skin texture, crisp details, zero AI artifacts."
         )
+
 
 
 if __name__ == "__main__":
