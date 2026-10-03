@@ -15,7 +15,8 @@ log = get_logger("gemini_vision_director")
 
 class GeminiVisionDirector:
     def __init__(self, api_key: str | None = None):
-        self.trainer = UniversalLLMVisualTrainer(api_key=api_key)
+        self.api_key = api_key
+        self.trainer = UniversalLLMVisualTrainer()
 
     def analyze_image_for_ugc(self, image_path: str | Path, product_title: str = "") -> dict[str, Any]:
         """Deeply analyzes image using universal few-shot physical ontology."""

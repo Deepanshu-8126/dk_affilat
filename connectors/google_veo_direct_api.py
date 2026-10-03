@@ -14,8 +14,13 @@ import re
 import time
 import urllib.parse
 import urllib.request
+import sys
 from pathlib import Path
 from typing import Any
+
+root_dir = Path(__file__).resolve().parent.parent
+if str(root_dir) not in sys.path:
+    sys.path.insert(0, str(root_dir))
 
 from core.logging_utils import get_logger
 
