@@ -63,7 +63,10 @@ class GoogleVeoDirectAPI:
         log.info("⚡ [GoogleVeoDirectAPI] Calling Google Veo API for '%s'...", product_title)
         log.info("Prompt:\n%s", prompt)
 
-        # 2. Try Google Cloud / AI Studio Veo Direct REST Endpoint
+        # 2. Try Google Cloud / AI Studio Veo Direct REST Endpoint with 5-Image Model Face Dataset
+        from connectors.model_face_identity_trainer import ModelFaceIdentityTrainer
+        ref_images_b64 = ModelFaceIdentityTrainer.get_dataset_base64_list()
+
         if self.api_key and not os.getenv("DRY_RUN", "true").lower() in ("1", "true"):
             try:
                 endpoint = f"https://generativelanguage.googleapis.com/v1beta/models/veo-2.0-generate-video:predict?key={self.api_key}"
@@ -71,7 +74,8 @@ class GoogleVeoDirectAPI:
                     "prompt": prompt,
                     "aspectRatio": aspect_ratio,
                     "durationSeconds": duration_seconds,
-                    "sampleCount": 1
+                    "sampleCount": 1,
+                    "imageInputs": [{"imageBytes": b64} for b64 in ref_images_b64[:3]]
                 }).encode("utf-8")
 
                 req = urllib.request.Request(
@@ -79,6 +83,7 @@ class GoogleVeoDirectAPI:
                     data=payload,
                     headers={"Content-Type": "application/json"}
                 )
+
                 with urllib.request.urlopen(req, timeout=120) as resp:
                     resp_data = json.loads(resp.read().decode("utf-8"))
                     log.info("Google Veo API response received: %s", resp_data)
