@@ -42,8 +42,18 @@ class VeoWebAutomationCrawler:
         )
         return prompt
 
-    async def crawl_and_generate_video(self, target_product: str, target_url: str = "https://labs.google/fx/tools/veo", headless: bool = False) -> dict[str, Any]:
-        """Launches Playwright Chromium browser, types trained prompt into Veo, and extracts generated MP4."""
+    async def crawl_and_generate_video(
+        self,
+        target_product: str,
+        target_url: str = "https://labs.google/fx/tools/video-fx",
+        headless: bool = False
+    ) -> dict[str, Any]:
+        """
+        Launches Playwright Chromium browser using user session,
+        inputs trained prompt into Google Veo / VideoFX portal,
+        intercepts video network responses, and saves the genuine generated MP4.
+        NO DUMMY FALLBACKS.
+        """
         from playwright.async_api import async_playwright
 
         prompt = self.train_prompt_from_reference(target_product)
@@ -54,85 +64,147 @@ class VeoWebAutomationCrawler:
         timestamp = int(time.time())
         dest_video_path = self.output_dir / f"EXTRACTED_VEO_{slug}_{timestamp}.mp4"
 
+        downloaded_video_bytes: bytes | None = None
+
         async with async_playwright() as p:
-            # Launch persistent browser context (stores your Google login)
+            # Connect to Brave / Chrome user profile or persistent profile
             browser = await p.chromium.launch_persistent_context(
                 user_data_dir=str(self.user_data_dir),
                 headless=headless,
-                args=["--disable-blink-features=AutomationControlled", "--start-maximized"],
+                args=[
+                    "--disable-blink-features=AutomationControlled",
+                    "--start-maximized",
+                    "--no-sandbox"
+                ],
                 viewport=None
             )
 
             page = await browser.new_page()
+
+            # Network Response Interceptor: Capture any generated MP4 or media stream directly from Google network traffic
+            async def handle_response(response):
+                nonlocal downloaded_video_bytes
+                url = response.url
+                content_type = response.headers.get("content-type", "")
+                if ("video/mp4" in content_type or ".mp4" in url or "video" in content_type) and response.status == 200:
+                    try:
+                        data = await response.body()
+                        if len(data) > 50000:  # Minimum 50KB for valid video
+                            log.info("🎥 Captured Google Veo media stream from network (%d KB): %s", len(data) // 1024, url[:80])
+                            downloaded_video_bytes = data
+                    except Exception as err:
+                        log.warning("Could not read media response body: %s", err)
+
+            page.on("response", handle_response)
+
             log.info("Navigating to Google Veo portal: %s", target_url)
+            await page.goto(target_url, timeout=60000, wait_until="domcontentloaded")
+            await page.wait_for_timeout(4000)
 
-            try:
-                await page.goto(target_url, timeout=60000, wait_until="domcontentloaded")
-                await page.wait_for_timeout(3000)
+            # Check if user needs Google Login
+            page_content = await page.content()
+            if "Sign in" in page_content or "accounts.google.com" in page.url:
+                log.warning("⚠️ Google Login Required on portal: %s", page.url)
+                if headless:
+                    await browser.close()
+                    raise RuntimeError(
+                        f"Google Authentication required for Google Veo portal ({target_url}). "
+                        "Please run browser in non-headless mode (headless=False) once to log in."
+                    )
 
-                # Look for prompt input box on the page
-                prompt_selectors = [
-                    "textarea[placeholder*='prompt']",
-                    "textarea[placeholder*='Describe']",
-                    "textarea",
-                    "div[contenteditable='true']",
-                    "input[type='text']"
-                ]
+            # Target prompt inputs in Google Labs / VideoFX / Veo DOM
+            prompt_selectors = [
+                "textarea[placeholder*='prompt']",
+                "textarea[placeholder*='Describe']",
+                "textarea[placeholder*='video']",
+                "div[contenteditable='true']",
+                "textarea",
+                "input[type='text']"
+            ]
 
-                input_found = False
-                for sel in prompt_selectors:
+            input_found = False
+            for sel in prompt_selectors:
+                try:
                     elem = await page.query_selector(sel)
-                    if elem:
+                    if elem and await elem.is_visible():
                         log.info("Found prompt input selector: %s", sel)
+                        await elem.click()
                         await elem.fill(prompt)
                         input_found = True
                         break
+                except Exception:
+                    pass
 
-                if input_found:
-                    # Click Generate button
-                    gen_btn_selectors = [
-                        "button:has-text('Generate')",
-                        "button:has-text('Create')",
-                        "button[type='submit']",
-                        "button:has-text('Submit')"
-                    ]
-                    for b_sel in gen_btn_selectors:
-                        btn = await page.query_selector(b_sel)
-                        if btn:
-                            log.info("Clicking generate button: %s", b_sel)
-                            await btn.click()
-                            break
-
-                    log.info("Waiting for video generation in DOM (polling video element)...")
-                    # Wait for video element or download link
-                    try:
-                        video_elem = await page.wait_for_selector("video[src]", timeout=120000)
-                        if video_elem:
-                            video_src = await video_elem.get_attribute("src")
-                            log.info("Extracted raw video URL: %s", video_src)
-                    except Exception as e:
-                        log.warning("DOM wait timeout or login required on portal: %s", e)
-
-            except Exception as e:
-                log.warning("Browser navigation error: %s", e)
-            finally:
+            if not input_found:
+                # Capture screenshot for debugging
+                screenshot_path = self.output_dir / f"veo_portal_debug_{timestamp}.png"
+                await page.screenshot(path=str(screenshot_path))
                 await browser.close()
+                raise RuntimeError(
+                    f"Could not locate prompt input box on Google Veo portal ({target_url}). "
+                    f"Debug screenshot saved to: {screenshot_path}"
+                )
 
-        # If live video extraction completed, return dest_video_path; otherwise provide the direct local high-bitrate master
-        if not dest_video_path.exists():
-            # Transcode/copy direct reference high-res stream as baseline
-            ref_video = Path("C:/Users/Deepanshu/Downloads/Unboxing_mesh_top_product_showcase_20261002102901.mp4")
-            if ref_video.exists():
-                import subprocess
-                subprocess.run(["ffmpeg", "-y", "-i", str(ref_video), "-t", "8", "-c:v", "copy", "-c:a", "copy", str(dest_video_path)], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            # Click Generate / Create button
+            gen_btn_selectors = [
+                "button:has-text('Generate')",
+                "button:has-text('Create')",
+                "button[aria-label*='Generate']",
+                "button[aria-label*='Create']",
+                "button[type='submit']"
+            ]
 
-        return {
-            "status": "success",
-            "product": target_product,
-            "trained_prompt": prompt,
-            "extracted_video_path": str(dest_video_path),
-            "target_portal": target_url
-        }
+            btn_clicked = False
+            for b_sel in gen_btn_selectors:
+                try:
+                    btn = await page.query_selector(b_sel)
+                    if btn and await btn.is_visible():
+                        log.info("Clicking generate button: %s", b_sel)
+                        await btn.click()
+                        btn_clicked = True
+                        break
+                except Exception:
+                    pass
+
+            if not btn_clicked:
+                await page.keyboard.press("Enter")
+
+            log.info("⏳ Waiting up to 120 seconds for Google Veo to render video...")
+
+            # Poll for up to 120s for video generation completion or network stream capture
+            for sec in range(1, 120):
+                await page.wait_for_timeout(1000)
+                if downloaded_video_bytes:
+                    break
+
+                # Also check video element src attribute in DOM
+                try:
+                    video_elem = await page.query_selector("video[src]")
+                    if video_elem:
+                        v_src = await video_elem.get_attribute("src")
+                        if v_src and (v_src.startswith("http") or v_src.startswith("blob:")):
+                            log.info("Found DOM video element src: %s", v_src)
+                except Exception:
+                    pass
+
+            await browser.close()
+
+        if downloaded_video_bytes:
+            dest_video_path.write_bytes(downloaded_video_bytes)
+            log.info("✅ Genuine Google Veo MP4 video extracted & saved: %s", dest_video_path)
+            return {
+                "status": "success",
+                "product": target_product,
+                "trained_prompt": prompt,
+                "extracted_video_path": str(dest_video_path),
+                "target_portal": target_url,
+                "size_bytes": len(downloaded_video_bytes)
+            }
+        else:
+            raise RuntimeError(
+                f"Google Veo Portal ({target_url}) did not complete video generation within 120 seconds, "
+                "or session requires active Google Pro authentication."
+            )
 
     def run_sync(self, target_product: str, headless: bool = False) -> dict[str, Any]:
         """Synchronous wrapper for execution."""
@@ -141,8 +213,5 @@ class VeoWebAutomationCrawler:
 
 if __name__ == "__main__":
     crawler = VeoWebAutomationCrawler()
-    res = crawler.run_sync("Gothic Chic Spiderweb Mesh Top", headless=True)
-    print("\n🎉 [Veo Web Extractor Complete!]")
-    print(f"  • Product: {res['product']}")
-    print(f"  • Extracted Video: {res['extracted_video_path']}")
-    print(f"\n🎥 [Trained Veo Prompt]:\n{res['trained_prompt']}")
+    print("Veo Web Automation Crawler initialized cleanly (Zero dummy fallbacks).")
+
