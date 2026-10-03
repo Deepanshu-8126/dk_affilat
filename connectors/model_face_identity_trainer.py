@@ -62,19 +62,27 @@ class ModelFaceIdentityTrainer:
         return b64_list
 
     @classmethod
-    def get_veo_facial_conditioning_prompt(cls, outfit_name: str = "outfit") -> str:
+    def get_veo_facial_conditioning_prompt(cls, outfit_name: str = "outfit", pose_key: str | None = None) -> str:
         """
-        Constructs hyper-detailed, face-preserving prompt for Google Veo AI 4K 60fps generation.
+        Constructs hyper-detailed, 100% face-preserving prompt for Google Veo AI 4K 60fps generation.
+        Combines exact model facial geometry + GenZ AI Influencer Pose + Real iPhone Filter Photography aesthetic.
         """
+        from connectors.genz_influencer_pose_library import GenZInfluencerPoseLibrary
+        
         b = cls.EXACT_FACIAL_BLUEPRINT
+        pose_info = GenZInfluencerPoseLibrary.get_pose(pose_key)
+
         return (
-            f"100% exact facial match and identical face clone of trained model: {b['face_structure']}. "
-            f"Face Details: {b['eyes']}, {b['lips']}, {b['skin']}, {b['bindi']}, {b['hair']}, {b['jewelery']}. "
+            f"Hyper-realistic 4K 60fps GenZ AI Influencer Reel with 100% exact facial match of trained model. "
+            f"Model Face: {b['face_structure']}, {b['eyes']}, {b['lips']}, {b['skin']}, {b['bindi']}, {b['hair']}, {b['jewelery']}. "
             f"Exact Expression: {b['expression']}. "
-            f"Wearing: {outfit_name}. "
-            f"Lighting: {b['lighting']}. "
-            f"Photorealistic 4K 60fps, 85mm portrait lens, zero facial distortion, zero AI blur, crisp skin texture."
+            f"GenZ Pose: {pose_info['description']} "
+            f"Outfit: {outfit_name}. "
+            f"Camera & Aesthetic: {pose_info['camera_angle']}, {pose_info['lighting']}. "
+            f"REAL IPHONE FILTER: Shot on iPhone 16 Pro, 24mm portrait lens, Kodak Portra 400 35mm film grain, "
+            f"natural skin pores and texture, golden hour daylight, direct flash highlights, zero CGI smooth blur, zero AI artifacts, 60fps."
         )
+
 
 
 if __name__ == "__main__":
